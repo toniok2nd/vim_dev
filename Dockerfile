@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 RUN apt update && apt install git curl make clang libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go -y
-RUN pip3 install jedi && git clone https://github.com/vim/vim.git
+RUN pip3 install jedi && pip3 install console_colors && git clone https://github.com/vim/vim.git
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 RUN /bin/bash -c 'cat <(echo "FORCE=\"yes\"") <(curl -sL install-node.now.sh/lts) |bash'
 RUN cd vim && ./configure --enable-python3interp && cd src && make && make install 
