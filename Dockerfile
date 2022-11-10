@@ -17,6 +17,7 @@ RUN /bin/bash -c "vim +'CocInstall -sync coc-cmake' +qall"
 RUN /bin/bash -c "vim +'CocInstall -sync coc-xml' +qall"
 RUN /bin/bash -c "vim +'CocInstall -sync coc-go' +qall"
 RUN /bin/bash -c "vim +'CocInstall -sync coc-sh' +qall"
+RUN /bin/bash -c "vim +'CocInstall -sync coc-snippets' +qall"
 RUN /bin/bash -c "echo 'export GOPATH=$HOME/go' >> /root/.bash_profile"
 RUN /bin/bash -c "echo 'export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin' >> /root/.bash_profile"
 COPY bashrcFile /tmp
