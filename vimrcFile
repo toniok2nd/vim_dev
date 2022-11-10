@@ -234,3 +234,6 @@ nnoremap \\ :s/\/\///g<CR>
 nnoremap // 0a//<ESC>
 vnoremap \\ :s/^\/\///g<CR>
 vnoremap // :s/^/\/\//g<CR>
+
+hi CocMenuSel term=standout ctermfg=0 ctermbg=3 guifg=Blue guibg=Yellow
+
