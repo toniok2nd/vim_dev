@@ -19,6 +19,6 @@ build-job:       # This job runs in the build stage, which runs first.
           - Dockerfile
           
   script:
-    - docker build --tag $CI_REGISTY_IMAGE:$CI_COMMIT_SHA
+    - docker build --tag $CI_REGISTY_IMAGE:$CI_COMMIT_SHA .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
 
