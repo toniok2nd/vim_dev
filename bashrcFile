@@ -1,2 +1,46 @@
 set -o vi
 bind '"jj":"\e"'
+
+# add current branch to PS1
+parse_git_output(){
+  git branch 2> /dev/null |grep '*' |sed -nr 's/(.*\*\ )(.*)/\ \(\2\)/p'
+}
+
+emoji_out(){
+python3 << EOF
+import datetime
+tmp=datetime.datetime.now().hour
+if tmp < 8:
+  print('\U0001f31c')
+elif tmp < 9:
+  print('\U0001f6bf')
+elif tmp < 10:
+  print('\U0001f950')
+elif tmp < 11:
+  print('\u2615')
+elif tmp < 12:
+  print('\U0001f913')
+elif tmp < 14:
+  print('\U0001f969')
+elif tmp < 17:
+  print('\U0001f433')
+elif tmp < 18:
+  print('\U0001f37b')
+elif tmp < 19:
+  print('\U0001f95c')
+elif tmp < 20:
+  print('\U0001f95c')
+elif tmp < 21:
+  print('\U0001f95c')
+elif tmp < 22:
+  print('\U0001f363')
+elif tmp < 23:
+  print('\U0001f393')
+else:
+  print('\U0001f4a4')
+EOF
+}
+
+ 
+export PS1="\[\033[01;32m\]\u@\[\033[00m\]\[\033[01;36m\]\h\[\033[00m\]:\[\033[01;34m\]\w \$(emoji_out) \033[01;33m\]\$(parse_git_output)\[\033[00m\]\$ "
+ 
