@@ -1,4 +1,3 @@
-
 " May need for vim (not neovim) since coc.nvim calculate byte offset by count
 " utf-8 byte sequence.
 set encoding=utf-8
@@ -236,4 +235,4 @@ vnoremap \\ :s/^\/\///g<CR>
 vnoremap // :s/^/\/\//g<CR>
 
 hi CocMenuSel term=standout ctermfg=0 ctermbg=3 guifg=Blue guibg=Yellow
-
+set backspace=indent,eol,start
