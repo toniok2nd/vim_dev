@@ -7,7 +7,7 @@ parse_git_output(){
 }
 
 emoji_out(){
-python3 << EOF
+python3 << EEOF
 import datetime
 tmp=datetime.datetime.now().hour
 if tmp < 8:
@@ -38,7 +38,7 @@ elif tmp < 23:
   print('\U0001f393')
 else:
   print('\U0001f4a4')
-EOF
+EEOF
 }
  
 export PS1="\[\033[01;31m\]\u@\[\033[00m\]\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w \$(emoji_out) \033[01;33m\]\$(parse_git_output)\[\033[00m\]\$ "
@@ -49,12 +49,4 @@ alias gitC='git log --graph --format="%C(auto) %h %d %Cblue %cn (%cr) %n %Creset
 alias gitL='git log --graph --oneline --decorate --all'
 alias ll='ls -alth'
 
-export GREEN=$(python3 -c 'import console_colors as C; print(C.GREEN.fg)')
-export RED=$(python3 -c 'import console_colors as C; print(C.RED.fg)')
-export RESET=$(python3 -c 'import console_colors as C; print(C.RESET)')
-export BLUE=$(python3 -c 'import console_colors as C; print(C.BLUE.fg)')
-export BGREEN=$(python3 -c 'import console_colors as C; print(C.GREEN.bg)')
-export BRED=$(python3 -c 'import console_colors as C; print(C.RED.bg)')
-export BRESET=$(python3 -c 'import console_colors as C; print(C.RESET)')
-export BBLUE=$(python3 -c 'import console_colors as C; print(C.BLUE.bg)')
 alias VENV="if [ -d VENV ]; then echo -e ' => '$GREEN'VENV found'; else echo -e ' => '$BLUE'NEW VENV'; python3 -m venv VENV; fi && source VENV/bin/activate"

@@ -1,0 +1,5 @@
+echo "Hello you"
+cat >> out << EOFF 
+<<<PAT>>>
+EOFF
+echo "fin de fichier"
