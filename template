@@ -1,5 +1,461 @@
-echo "Hello you"
-cat >> out << EOFF 
-<<<PAT>>>
-EOFF
-echo "fin de fichier"
+#!/bin/bash
+if (whoami != root)
+then echo "Please run as root"
+exit 1
+fi
+if [ $(grep EOF_PAT1 /root/.tmux.conf |wc -l ) -eq 0 ]; then
+cat >> /root/.tmux.conf << EOF_PAT1
+
+# to write on user directory as .tmux.conf
+# remap prefix from 'C-b' to 'C-q'
+unbind C-b
+set-option -g prefix C-q
+bind-key C-q send-prefix
+ 
+bind-key Y run-shell -b "tmux show-buffer |xclip -sel prim -i;tmux show-buffer |xclip -sel clip -i"
+ 
+# set mode-keys vi
+set -g mode-keys vi
+ 
+# https://github.com/dminca/dotfiles/tree/master/dotfiles
+# vim style
+###########
+# vim-like pane switching
+bind -r k select-pane -U
+bind -r j select-pane -D
+bind -r h select-pane -L
+bind -r l select-pane -R
+ 
+# vim-like pane resizing
+bind -r C-k resize-pane -U
+bind -r C-j resize-pane -D
+bind -r C-h resize-pane -L
+bind -r C-l resize-pane -R
+ 
+# unbind
+unbind Up
+unbind Down
+unbind Left
+unbind Right
+ 
+unbind C-Up
+unbind C-Down
+unbind C-Left
+unbind C-Right
+
+unbind %
+unbind '"'
+bind % split-window -h -c "#{pane_current_path}"
+bind '"' split-window -c "#{pane_current_path}"
+
+set -g status-style bg=red,fg=white
+set -g window-status-current-style bg=green
+
+## imported start ##
+# to write on user directory as .tmux.conf
+# remap prefix from 'C-b' to 'C-q'
+unbind C-b
+set-option -g prefix C-q
+bind-key C-q send-prefix
+ 
+bind-key Y run-shell -b "tmux show-buffer |xclip -sel prim -i;tmux show-buffer |xclip -sel clip -i"
+ 
+# set mode-keys vi
+set -g mode-keys vi
+ 
+# https://github.com/dminca/dotfiles/tree/master/dotfiles
+# vim style
+###########
+# vim-like pane switching
+bind -r k select-pane -U
+bind -r j select-pane -D
+bind -r h select-pane -L
+bind -r l select-pane -R
+ 
+# vim-like pane resizing
+bind -r C-k resize-pane -U
+bind -r C-j resize-pane -D
+bind -r C-h resize-pane -L
+bind -r C-l resize-pane -R
+ 
+# unbind
+unbind Up
+unbind Down
+unbind Left
+unbind Right
+ 
+unbind C-Up
+unbind C-Down
+unbind C-Left
+unbind C-Right
+
+unbind %
+unbind '"'
+bind % split-window -h -c "#{pane_current_path}"
+bind '"' split-window -c "#{pane_current_path}"
+
+set -g status-style bg=red,fg=white
+set -g window-status-current-style bg=green
+## imported stop ##
+
+
+
+set -g status-interval 60
+WEATHER='#(curl -s wttr.in/\?format\=4)'
+set -g status-right "$WEATHER ..."
+
+EOF_PAT1
+else
+echo "Nothing to do"
+fi
+if [ $(grep EOF_PAT2 /root/.vimrc |wc -l ) -eq 0 ]; then
+cat >> /root/.vimrc << EOF_PAT2
+
+" May need for vim (not neovim) since coc.nvim calculate byte offset by count
+" utf-8 byte sequence.
+set encoding=utf-8
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+
+" Don t try to be vi compatible " 
+set nocompatible
+ 
+" Helps force plugins to load correctly when it is turned back on below "
+filetype on 
+ 
+" Turn on syntax highlighting "
+syntax on
+ 
+
+
+" set the runtime path to include Vundle and initialize "
+call plug#begin()
+
+Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+ 
+call plug#end()            
+ 
+" Show line numbers "
+set number
+ 
+" Show file stats "
+set ruler
+ 
+" Encoding "
+set encoding=utf-8
+ 
+" Whitespace "
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+ 
+" Allow hidden buffers "
+set hidden
+ 
+" Status bar "
+set laststatus=2
+ 
+" specials chars "
+set listchars+=space:.,tab:>-
+"set list
+ 
+" Last line "
+set showmode
+set showcmd
+ 
+" Searching "
+set hlsearch
+set incsearch
+set showmatch
+
+" TODO: Pick a leader key "
+let mapleader = ","
+
+let python_highlight_all = 1
+
+:map <F2> :%!jq '.'<CR>
+:map <F3> :%!xxd<CR>
+:map <F4> :%!xxd -r<CR>
+:map <F5> :set nonumber<CR>:set norelativenumber<CR>:set nolist<CR>
+:map <F6> :set number<CR>:set relativenumber<CR>:set list<CR>
+:map <F7> :w<CR>:!clear;python3 %<CR>
+ 
+:nnoremap q 0
+:nnoremap <space> $ 
+:inoremap jj <ESC>
+:cnoremap jj <ESC>
+:nnoremap <space>t :!ctags -aR --language-force=Python -L `python -c 'import sys,glob;tab=[];[ tab.extend(glob.glob(p+"/*py",recursive=True)) for p in sys.path ];[print(e) for e in tab]'` .   --extra=+ivmfc<cr><cr>
+set belloff=all
+:cabbrev help tab help
+set tags=./tags;,tags;
+
+
+au FileType go nmap <leader>r <Plug>(go-run-split)
+inoremap <leader><leader> <C-x><C-o>
+nnoremap \\ :s/\/\///g<CR>
+nnoremap // 0a//<ESC>
+vnoremap \\ :s/^\/\///g<CR>
+vnoremap // :s/^/\/\//g<CR>
+
+hi CocMenuSel term=standout ctermfg=0 ctermbg=3 guifg=Blue guibg=Yellow
+set backspace=indent,eol,start
+set undofile
+EOF_PAT2
+else
+echo "Nothing to do"
+fi
+if [ $(grep EOF_PAT3 /root/.bashrc |wc -l ) -eq 0 ]; then
+cat >> /root/.bashrc << EOF_PAT3
+
+set -o vi
+bind '"jj":"\e"'
+
+# add current branch to PS1
+parse_git_output(){
+  git branch 2> /dev/null |grep '*' |sed -nr 's/(.*\*\ )(.*)/\ \(\2\)/p'
+}
+
+emoji_out(){
+python3 << EEOF
+import datetime
+tmp=datetime.datetime.now().hour
+if tmp < 8:
+  print('\U0001f31c')
+elif tmp < 9:
+  print('\U0001f6bf')
+elif tmp < 10:
+  print('\U0001f950')
+elif tmp < 11:
+  print('\u2615')
+elif tmp < 12:
+  print('\U0001f913')
+elif tmp < 14:
+  print('\U0001f969')
+elif tmp < 17:
+  print('\U0001f433')
+elif tmp < 18:
+  print('\U0001f37b')
+elif tmp < 19:
+  print('\U0001f95c')
+elif tmp < 20:
+  print('\U0001f95c')
+elif tmp < 21:
+  print('\U0001f95c')
+elif tmp < 22:
+  print('\U0001f363')
+elif tmp < 23:
+  print('\U0001f393')
+else:
+  print('\U0001f4a4')
+EEOF
+}
+ 
+export PS1="\[\033[01;31m\]\u@\[\033[00m\]\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w \$(emoji_out) \033[01;33m\]\$(parse_git_output)\[\033[00m\]\$ "
+ 
+alias BASHRC='source ~/.bashrc'
+alias VBASHRC='vim ~/.bashrc'
+alias gitC='git log --graph --format="%C(auto) %h %d %Cblue %cn (%cr) %n %Creset %s %n" --all'
+alias gitL='git log --graph --oneline --decorate --all'
+alias ll='ls -alth'
+
+alias VENV="if [ -d VENV ]; then echo -e ' => '$GREEN'VENV found'; else echo -e ' => '$BLUE'NEW VENV'; python3 -m venv VENV; fi && source VENV/bin/activate"
+EOF_PAT3
+else
+echo "Nothing to do"
+fi
+if [ $(grep EOF_PAT4 /root/.vim/coc-settings.json |wc -l ) -eq 0 ]; then
+cat >> /root/.vim/coc-settings.json << EOF_PAT4
+
+{
+  "languageserver": {
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": [
+        "terraform",
+        "tf"
+      ],
+      "initializationOptions": {},
+      "settings": {}
+    }
+  },
+  "yaml.schemas": {
+    "kubernetes": "/*.yaml"},
+    "go.goplsOptions": {
+      "completeUnimported": true
+    }
+}
+EOF_PAT4
+else
+echo "Nothing to do"
+fi
+apt update && apt install git curl make clang libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger -y
+pip3 install jedi && pip3 install console_colors && git clone https://github.com/vim/vim.git
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+/bin/bash -c "cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash"
+cd vim && ./configure --enable-python3interp && cd src && make && make install
+/bin/bash -c 'echo "q" |vim  +PlugInstall +qall || true'
+npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install
+/bin/bash -c "vim +'CocInstall -sync coc-css' +qall"
+/bin/bash -c "vim +'CocInstall -sync coc-json' +qall"
+/bin/bash -c "vim +'CocInstall -sync coc-yaml' +qall"
+/bin/bash -c "vim +'CocInstall -sync coc-python' +qall"
+/bin/bash -c "vim +'CocInstall -sync coc-git' +qall"
+/bin/bash -c "vim +'CocInstall -sync coc-docker' +qall"
+/bin/bash -c "vim +'CocInstall -sync coc-cmake' +qall"
+/bin/bash -c "vim +'CocInstall -sync coc-xml' +qall"
+/bin/bash -c "vim +'CocInstall -sync coc-go' +qall"
+/bin/bash -c "vim +'CocInstall -sync coc-sh' +qall"
+/bin/bash -c "vim +'CocInstall -sync coc-snippets' +qall"
+/bin/bash -c "echo 'export GOPATH=/home/family/go' >> /root/.bash_profile"
+/bin/bash -c "echo 'export PATH=/home/family/.local/bin:/home/family/.cargo/bin:/home/family/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/bin' >> /root/.bash_profile"
