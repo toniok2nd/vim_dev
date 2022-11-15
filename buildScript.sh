@@ -25,7 +25,6 @@ addDataToFile PAT1 "/root/.tmux.conf" tmuxFile
 addDataToFile PAT2 "/root/.vimrc" vimrcFile
 addDataToFile PAT3 "/root/.bashrc" bashrcFile
 addDataToFile PAT4 "/root/.vim/coc-settings.json" coc-settings.json
-addDataToFile PAT5 "/root/.config/coc/ultisnips/yaml.snippets" yaml.snippets
 
 
 echo "apt update && apt install git curl make clang libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger -y" >> template
@@ -49,3 +48,4 @@ echo "/bin/bash -c \"vim +'CocInstall -sync coc-sh' +qall\"" >> template
 echo "/bin/bash -c \"vim +'CocInstall -sync coc-snippets' +qall\"" >> template
 echo "/bin/bash -c \"echo 'export GOPATH=$HOME/go' >> /root/.bash_profile\"" >> template
 echo "/bin/bash -c \"echo 'export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin' >> /root/.bash_profile\"" >> template
+addDataToFile PAT5 "/root/.config/coc/ultisnips/yaml.snippets" yaml.snippets
