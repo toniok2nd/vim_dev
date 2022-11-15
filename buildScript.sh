@@ -26,7 +26,6 @@ addDataToFile PAT2 "/root/.vimrc" vimrcFile
 addDataToFile PAT3 "/root/.bashrc" bashrcFile
 addDataToFile PAT4 "/root/.vim/coc-settings.json" coc-settings.json
 
-
 echo "apt update && apt install git curl make clang libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger -y" >> template
 echo "pip3 install jedi && pip3 install console_colors && git clone https://github.com/vim/vim.git" >> template
 echo "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" >> template
@@ -48,4 +47,5 @@ echo "/bin/bash -c \"vim +'CocInstall -sync coc-sh' +qall\"" >> template
 echo "/bin/bash -c \"vim +'CocInstall -sync coc-snippets' +qall\"" >> template
 echo "/bin/bash -c \"echo 'export GOPATH=$HOME/go' >> /root/.bash_profile\"" >> template
 echo "/bin/bash -c \"echo 'export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin' >> /root/.bash_profile\"" >> template
+
 addDataToFile PAT5 "/root/.config/coc/ultisnips/yaml.snippets" yaml.snippets
