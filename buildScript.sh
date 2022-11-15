@@ -20,7 +20,6 @@ addTestUserAsRoot(){
 }
 
 echo "#!/bin/bash" > template
-echo "#!/bin/bash" > out.sh
 addTestUserAsRoot
 addDataToFile PAT1 "/root/.tmux.conf" tmuxFile
 addDataToFile PAT2 "/root/.vimrc" vimrcFile
