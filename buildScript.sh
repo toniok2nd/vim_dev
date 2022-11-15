@@ -45,9 +45,5 @@ echo "/bin/bash -c \"vim +'CocInstall -sync coc-xml' +qall\"" >> template
 echo "/bin/bash -c \"vim +'CocInstall -sync coc-go' +qall\"" >> template
 echo "/bin/bash -c \"vim +'CocInstall -sync coc-sh' +qall\"" >> template
 echo "/bin/bash -c \"vim +'CocInstall -sync coc-snippets' +qall\"" >> template
-
-echo "/bin/bash -c \"mkdir -p /root/.config/coc/ultisnips\"" >> template
-echo "/bin/bash -c \"touch /root/.config/coc/ultisnips/yaml.snippets\"" >> template
-addDataToFile PAT5 "/root/.config/coc/ultisnips/yaml.snippets" yaml.snippets
-echo "/bin/bash -c 'echo \"export GOPATH=$HOME/go\" >> /root/.bash_profile'" >> template
-echo "/bin/bash -c 'echo \"export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin\" >> /root/.bash_profile'" >> template
+echo "/bin/bash -c \"echo 'export GOPATH=$HOME/go' >> /root/.bash_profile\"" >> template
+echo "/bin/bash -c \"echo 'export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin' >> /root/.bash_profile\"" >> template
