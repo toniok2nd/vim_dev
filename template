@@ -457,6 +457,8 @@ npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install
 /bin/bash -c "vim +'CocInstall -sync coc-go' +qall"
 /bin/bash -c "vim +'CocInstall -sync coc-sh' +qall"
 /bin/bash -c "vim +'CocInstall -sync coc-snippets' +qall"
+/bin/bash -c "mkdir -p /root/.config/coc/ultisnips"
+/bin/bash -c "touch /root/.config/coc/ultisnips/yaml.snippets"
 if [ $(grep EOF_PAT5 /root/.config/coc/ultisnips/yaml.snippets |wc -l ) -eq 0 ]; then
 cat >> /root/.config/coc/ultisnips/yaml.snippets << EOF_PAT5
 
