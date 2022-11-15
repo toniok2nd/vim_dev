@@ -1,181 +1,154 @@
-# A valid snippet should starts with:
-#
-#		snippet trigger_word [ "description" [ options ] ]
-#
-# and end with:
-#
-#		endsnippet
-#
-# Snippet options:
-#
-#		b - Beginning of line.
-#		i - In-word expansion.
-#		w - Word boundary.
-#		r - Regular expression
-#		e - Custom context snippet
-#		A - Snippet will be triggered automatically, when condition matches.
-#
-# Basic example:
-#
-#		snippet emitter "emitter properties" b
-#		private readonly ${1} = new Emitter<$2>()
-#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
-#		endsnippet
-#
-# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
-
-
 snippet pod "kubernetes Pod"
-	apiVersion: v1
-	kind: Pod
-	metadata:
-		name: ${1:PodName}
-		namespace: ${2:Namespace}
-		labels:
-			${3:LabelName}: ${4:LabelValue}
-	spec:
-		containers:
-			- name: ${5:ContainerName}
-				image:${6:ImageName}
-				ports:
-					- name: http
-						containerPort: 80
-						protocol: TCP
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: ${1:PodName}
+    namespace: ${2:Namespace}
+    labels:
+      ${3:LabelName}: ${4:LabelValue}
+  spec:
+    containers:
+      - name: ${5:ContainerName}
+        image:${6:ImageName}
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
 endsnippet
 snippet service "Kubernetes Service"
-	apiVersion: v1
-	kind: Service
-	metadata:
-		name: ${1:SvcName}
-		namespace: ${2:Namespace}
-	spec:
-		selector:
-			${3:LabelName}: ${4:LabelValue}
-		ports:
-			- protocol: TCP
-				port: 80
-				targetPort: ${5:TargetPort}
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: ${1:SvcName}
+    namespace: ${2:Namespace}
+  spec:
+    selector:
+      ${3:LabelName}: ${4:LabelValue}
+    ports:
+      - protocol: TCP
+        port: 80
+        targetPort: ${5:TargetPort}
 endsnippet
 snippet deploy "Kubernetes Deployment"
-	apiVersion: apps/v1
-	kind: Deployment
-	metadata:
-		name: ${1:DeploymentName}
-		namespace: ${2:Namespace}
-		labels:
-			${3:LabelName}: ${4:LabelValue}
-	spec:
-		replicas: ${5:Replicas}
-		selector:
-			matchLabels:
-				${6:LabelName}: ${7:LabelValue}
-		template:
-			metadata:
-				labels:
-				${6:LabelName}: ${9:LabelValue}
-			spec:
-				containers:
-				- name: ${10:ContainerName}
-					image:${11:ContainerImage}
-					ports:
-					- containerPort: 80
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: ${1:DeploymentName}
+    namespace: ${2:Namespace}
+    labels:
+      ${3:LabelName}: ${4:LabelValue}
+  spec:
+    replicas: ${5:Replicas}
+    selector:
+      matchLabels:
+        ${6:LabelName}: ${7:LabelValue}
+    template:
+      metadata:
+        labels:
+        ${6:LabelName}: ${9:LabelValue}
+      spec:
+        containers:
+        - name: ${10:ContainerName}
+          image:${11:ContainerImage}
+          ports:
+          - containerPort: 80
 endsnippet
 snippet cronjob "Kubernetes CronJob"
-	apiVersion: batch/v1beta1
-	kind: CronJob
-	metadata:
-		name: ${1:CronjobName}
-		namespace: ${2:Namespace}
-	spec:
-		schedule: "*/1 * * * *"
-		jobTemplate:
-			spec:
-				template:
-					spec:
-						containers:
-						- name: ${3:ContainerName}
-							image:${4:ImageName}
-						restartPolicy: OnFailure
+  apiVersion: batch/v1beta1
+  kind: CronJob
+  metadata:
+    name: ${1:CronjobName}
+    namespace: ${2:Namespace}
+  spec:
+    schedule: "*/1 * * * *"
+    jobTemplate:
+      spec:
+        template:
+          spec:
+            containers:
+            - name: ${3:ContainerName}
+              image:${4:ImageName}
+            restartPolicy: OnFailure
 endsnippet
 snippet configmap "Kubernetes ConfigMap"
-	apiVersion: v1
-	kind: ConfigMap
-	metadata:
-		name: ${1:ConfigMapName}
-		namespace: ${2:Namespace}
-	data:
-		file.name: |
-			multiline contents
-			for this file.name
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: ${1:ConfigMapName}
+    namespace: ${2:Namespace}
+  data:
+    file.name: |
+      multiline contents
+      for this file.name
 endsnippet
 snippet secret "Kubernetes Secret"
-	apiVersion: v1
-	kind: Secret
-	metadata:
-		name: ${1:SecretName}
-		namespace: ${2:Namespace}
-	type: Opaque
-	data:
-		base64.key1: ${3:Base64String1}
-		base64.key2: ${4:Base64String2}
-	stringData:
-		my.variable: ${5:MyVariableString}
-		my.file: |-
-			Multiline contents for this
-			secret file
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: ${1:SecretName}
+    namespace: ${2:Namespace}
+  type: Opaque
+  data:
+    base64.key1: ${3:Base64String1}
+    base64.key2: ${4:Base64String2}
+  stringData:
+    my.variable: ${5:MyVariableString}
+    my.file: |-
+      Multiline contents for this
+      secret file
 endsnippet
 snippet loadbalancer "Kubernetes LoadBalancer"
-	apiVersion: v1
-	kind: Service
-	metadata:
-		name: ${1:LoadBalancerName}
-		namespace: ${2:Namespace}
-	spec:
-		selector:
-			app: ${3:MyApp}
-		type: LoadBalancer
-		ports:
-			- protocol: TCP
-				port: 80
-				targetPort: ${3:TargetPort}
-		clusterIP: ${4:ClusterIP}
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: ${1:LoadBalancerName}
+    namespace: ${2:Namespace}
+  spec:
+    selector:
+      app: ${3:MyApp}
+    type: LoadBalancer
+    ports:
+      - protocol: TCP
+        port: 80
+        targetPort: ${3:TargetPort}
+    clusterIP: ${4:ClusterIP}
 endsnippet
 snippet ingress "Kubernetes Ingress"
-	apiVersion: networking.k8s.io/v1beta1
-	kind: Ingress
-	metadata:
-		name: ${1:IngressName}
-		namespace: ${2:Namespace}
-		annotations:
-			nginx.ingress.kubernetes.io/rewrite-target: /
-	spec:
-		rules:
-		- host: foo.bar.com
-			http:
-				paths:
-				- path: /foo
-					backend:
-						serviceName: service1
-						servicePort: 4200
-				- path: /bar
-					backend:
-						serviceName: service2
-						servicePort: 8080
+  apiVersion: networking.k8s.io/v1beta1
+  kind: Ingress
+  metadata:
+    name: ${1:IngressName}
+    namespace: ${2:Namespace}
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+  spec:
+    rules:
+    - host: foo.bar.com
+      http:
+        paths:
+        - path: /foo
+          backend:
+            serviceName: service1
+            servicePort: 4200
+        - path: /bar
+          backend:
+            serviceName: service2
+            servicePort: 8080
 endsnippet
 snippet job "Kubernetes Job"
-	apiVersion: batch/v1
-	kind: Job
-	metadata:
-		name: ${1:JobName}
-		namespace: ${2:Namespace}
-	spec:
-		template:
-			spec:
-				containers:
-				- name: ${3:ContainerName}
-					image: ${4:ImageName}
-				restartPolicy: Never
-		backoffLimit: 4
+  apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: ${1:JobName}
+    namespace: ${2:Namespace}
+  spec:
+    template:
+      spec:
+        containers:
+        - name: ${3:ContainerName}
+          image: ${4:ImageName}
+        restartPolicy: Never
+    backoffLimit: 4
 endsnippet
 
 ###################################
