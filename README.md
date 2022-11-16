@@ -17,7 +17,3 @@ The script use local files:
 
 ## Doc for coc-nvim extensions
 - https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensionscoc-nvim extensions
-- - https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensionscoc-nvim extensions
-- - https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensionscoc-nvim extensions
-- - https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensionscoc-nvim extensions
-- - https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
