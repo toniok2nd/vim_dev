@@ -35,5 +35,6 @@ echo "cd vim && ./configure --enable-python3interp && cd src && make && make ins
 echo "/bin/bash -c 'echo \"q\" |vim  +PlugInstall +qall || true'" >> template
 echo "npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install" >> template
 echo "vim -c 'CocInstall -sync coc-json coc-go coc-sh coc-git coc-xml coc-python coc-cmake coc-snippets coc-yaml coc-docker coc-html|q'" >> template
+echo "source /root/.bashrc" >> template
 echo "/bin/bash -c \"echo 'export GOPATH=$HOME/go' >> /root/.bash_profile\"" >> template
 echo "/bin/bash -c \"echo 'export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin' >> /root/.bash_profile\"" >> template
