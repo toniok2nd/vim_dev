@@ -14,3 +14,10 @@ The script use local files:
 
 
 # you can also generate a docker image from Dockerfile
+
+## Doc for coc-nvim extensions
+- https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensionscoc-nvim extensions
+- - https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensionscoc-nvim extensions
+- - https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensionscoc-nvim extensions
+- - https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensionscoc-nvim extensions
+- - https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions

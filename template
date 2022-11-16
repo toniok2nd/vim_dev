@@ -446,16 +446,6 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 cd vim && ./configure --enable-python3interp && cd src && make && make install
 /bin/bash -c 'echo "q" |vim  +PlugInstall +qall || true'
 npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install
-/bin/bash -c "vim +'CocInstall -sync coc-css' +qall"
-/bin/bash -c "vim +'CocInstall -sync coc-json' +qall"
-/bin/bash -c "vim +'CocInstall -sync coc-yaml' +qall"
-/bin/bash -c "vim +'CocInstall -sync coc-python' +qall"
-/bin/bash -c "vim +'CocInstall -sync coc-git' +qall"
-/bin/bash -c "vim +'CocInstall -sync coc-docker' +qall"
-/bin/bash -c "vim +'CocInstall -sync coc-cmake' +qall"
-/bin/bash -c "vim +'CocInstall -sync coc-xml' +qall"
-/bin/bash -c "vim +'CocInstall -sync coc-go' +qall"
-/bin/bash -c "vim +'CocInstall -sync coc-sh' +qall"
-/bin/bash -c "vim +'CocInstall -sync coc-snippets' +qall"
+vim -c 'CocInstall -sync coc-json coc-go coc-sh coc-git coc-xml coc-python coc-cmake coc-snippets coc-yaml coc-docker coc-html|q'
 /bin/bash -c "echo 'export GOPATH=/home/toniok/go' >> /root/.bash_profile"
 /bin/bash -c "echo 'export PATH=/home/toniok/.local/bin:/home/toniok/bin:/home/toniok/.nvm/versions/node/v18.0.0/bin:/home/toniok/.local/bin:/home/toniok/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/toniok/tizen-studio/platforms/tizen-5.0/common/tidl:/usr/local/go/bin:/home/toniok/kafka-beginners-course-master/BIN/kafka_2.13-2.6.0/bin:/usr/local/go/bin:/bin' >> /root/.bash_profile"
