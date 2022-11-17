@@ -16,7 +16,11 @@ addDataToFile(){
   echo 'if [ $(grep '"$1 $2"' |wc -l ) -eq 0 ]; then' >> $OUTPUT_FILE
   echo "cat >> $2 << EOF_$1" >> $OUTPUT_FILE
   # case for vimrc
+  if [[ "$2" == *"vimrc"* ]]; then
+  echo "\" $1" >> $OUTPUT_FILE
+  else
   echo "# $1" >> $OUTPUT_FILE
+  fi
   echo "<<<$1>>>" >> $OUTPUT_FILE
   echo "EOF_$1" >> $OUTPUT_FILE
   sed -i -e "/<<<$1>>>/r $3" -e "s/<<<$1>>>//g"  $OUTPUT_FILE
