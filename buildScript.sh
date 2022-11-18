@@ -91,5 +91,6 @@ addToFile "cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash"
 
 # install plug for vim
 addToFile "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" 
-addToFile "vim  +PlugInstall +qall" 
+addToFile "mkdir -p ~/.vim/plugged/coc.nvim/"
 addToFile "npm install --global yarn && cd ~/.vim/plugged/coc.nvim/ && yarn install" 
+addToFile "vim  +PlugInstall +qall" 

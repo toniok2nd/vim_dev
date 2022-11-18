@@ -1,5 +1,5 @@
 " PAT2
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-go',  'coc-sh', 'coc-xml', 'coc-python', 'coc-cmake', 'coc-snippets', 'coc-yaml', 'coc-docker', 'coc-html']
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-go',  'coc-sh', 'coc-xml', 'coc-python', 'coc-cmake', 'coc-snippets', 'coc-yaml', 'coc-docker', 'coc-html','coc-ansible', 'coc-clangd','coc-perl' ]
 
 " May need for vim (not neovim) since coc.nvim calculate byte offset by count
 " utf-8 byte sequence.
