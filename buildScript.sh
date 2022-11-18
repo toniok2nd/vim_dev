@@ -64,6 +64,9 @@ addDataToFile PAT4 "~/.vim/coc-settings.json" coc-settings.json
 addDataToFile PAT5 "~/.profile" profileFile
 
 # install apt tools
+addToFile "if ! command -v sudo &> /dev/null; then"
+addToFile "apt update && apt install sudo -y" 
+addToFile "fi"
 addToFile "sudo apt update && sudo apt install git curl make clang libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger -y" 
 
 # install python
