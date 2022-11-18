@@ -88,9 +88,10 @@ addToFile "fi"
 
 # install nodejs
 addToFile "cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash" 
+addToFile "npm install --global yarn" 
 
 # install plug for vim
-addToFile "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" 
+addToFile "curl -fLo ~/.var/app/io.neovim.nvim/data/nvim/site/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 addToFile "mkdir -p ~/.vim/plugged/coc.nvim/"
-addToFile "npm install --global yarn && cd ~/.vim/plugged/coc.nvim/ && yarn install" 
+addToFile "cd ~/.vim/plugged/coc.nvim/ && yarn install" 
 addToFile "vim  +PlugInstall +qall" 

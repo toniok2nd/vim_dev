@@ -473,7 +473,8 @@ cd vim && ./configure --enable-python3interp && cd src && make && make install
 fi
 fi
 cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+npm install --global yarn
+curl -fLo ~/.var/app/io.neovim.nvim/data/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 mkdir -p ~/.vim/plugged/coc.nvim/
-npm install --global yarn && cd ~/.vim/plugged/coc.nvim/ && yarn install
+cd ~/.vim/plugged/coc.nvim/ && yarn install
 vim +PlugInstall +qall
