@@ -113,6 +113,12 @@ if [ $(grep PAT2 ~/.vimrc |wc -l ) -eq 0 ]; then
 cat >> ~/.vimrc << EOF_PAT2
 " PAT2
 
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+    silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+      autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 " set the runtime path to include Vundle and initialize 
 call plug#begin()
 
@@ -474,7 +480,6 @@ fi
 fi
 cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash
 npm install --global yarn
-curl -fLo ~/.var/app/io.neovim.nvim/data/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 mkdir -p ~/.vim/plugged/coc.nvim/
 cd ~/.vim/plugged/coc.nvim/ && yarn install
 vim +PlugInstall +qall
