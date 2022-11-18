@@ -62,9 +62,6 @@ addDataToFile PAT3 "~/.bashrc" bashrcFile
 addDataToFile PAT4 "~/.vim/coc-settings.json" coc-settings.json
 # add profile conf
 addDataToFile PAT5 "~/.profile" profileFile
-# add snippets conf
-addToFile "mkdir -p ~/.config/coc/ultisnips/"
-addDataToFile PAT6 "~/.config/coc/ultisnips/yaml.snippets" yaml.snippets
 
 # install apt tools
 addToFile "if ! command -v sudo &> /dev/null; then"
@@ -92,9 +89,3 @@ addToFile "fi"
 # install nodejs
 addToFile "cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash" 
 addToFile "npm install --global yarn" 
-
-# install plug for vim
-#addToFile "curl -fLo ~/.var/app/io.neovim.nvim/data/nvim/site/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-#addToFile "mkdir -p ~/.vim/plugged/coc.nvim/"
-#addToFile "cd ~/.vim/plugged/coc.nvim/ && yarn install" 
-#addToFile "vim  +PlugInstall +qall" 

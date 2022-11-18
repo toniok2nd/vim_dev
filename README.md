@@ -12,6 +12,11 @@ The script use local files:
 - tmuxFile
 - vimrcFile
 
+# To install snippets file 
+```bash
+curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/yaml.snippets -O
+cp yaml.snippets ~/.config/coc/ultisnips/yaml.snippets
+```
 
 # you can also generate a docker image from Dockerfile
 
