@@ -21,6 +21,11 @@ curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/yaml.snippets -O
 ```bash
 curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/minikubInstall |bash
 ```
+# If you docker in docker
+```bash
+docker run --privileged=true -v /var/run/docker.sock:/var/run/docker.sock -it ubuntu bash
+```
+
 
 # you can also generate a docker image from Dockerfile
 
