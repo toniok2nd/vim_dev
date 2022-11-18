@@ -75,7 +75,7 @@ addToFile "pip3 install jedi && pip3 install console_colors"
 #----------
 # test if vim is installed
 addToFile "if ! command -v vim &> /dev/null; then"
-addToFile "if ! [ $(vim --version | grep -q '+python';echo $?) -eq 0 ];then "
+addToFile 'if ! [ $(vim --version | grep -q "+python";echo $?) -eq 0 ];then '
 # clone vim REPO
 addToFile "git clone https://github.com/vim/vim.git" 
 # configure and compile vim
