@@ -113,7 +113,17 @@ if [ $(grep PAT2 ~/.vimrc |wc -l ) -eq 0 ]; then
 cat >> ~/.vimrc << EOF_PAT2
 " PAT2
 
-" PAT2
+" set the runtime path to include Vundle and initialize 
+call plug#begin()
+
+" Use release branch (recommend)
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"
+" Or build from source code by using yarn: https://yarnpkg.com
+" Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+ 
+call plug#end()            
+
 let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-go',  'coc-sh', 'coc-xml', 'coc-python', 'coc-cmake', 'coc-snippets', 'coc-yaml', 'coc-docker', 'coc-html','coc-ansible', 'coc-clangd','coc-perl' ]
 
 " May need for vim (not neovim) since coc.nvim calculate byte offset by count
@@ -271,10 +281,10 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 
-" Don t try to be vi compatible " 
+" Don t try to be vi compatible 
 set nocompatible
  
-" Helps force plugins to load correctly when it is turned back on below "
+" Helps force plugins to load correctly when it is turned back on below 
 filetype on 
  
 " Turn on syntax highlighting "
@@ -282,12 +292,6 @@ syntax on
  
 
 
-" set the runtime path to include Vundle and initialize "
-call plug#begin()
-
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
- 
-call plug#end()            
  
 " Show line numbers "
 set number
