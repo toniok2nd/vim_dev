@@ -62,6 +62,9 @@ addDataToFile PAT3 "~/.bashrc" bashrcFile
 addDataToFile PAT4 "~/.vim/coc-settings.json" coc-settings.json
 # add profile conf
 addDataToFile PAT5 "~/.profile" profileFile
+# add snippets conf
+addToFile "mkdir -p ~/.config/coc/ultisnips/"
+addDataToFile PAT6 "~/.config/coc/ultisnips/yaml.snippets" yaml.snippets
 
 # install apt tools
 addToFile "if ! command -v sudo &> /dev/null; then"

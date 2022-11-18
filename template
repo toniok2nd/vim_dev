@@ -467,6 +467,363 @@ EOF_PAT5
 else
 echo "Nothing to do"
 fi
+mkdir -p ~/.config/coc/ultisnips/
+if [ $(grep PAT6 ~/.config/coc/ultisnips/yaml.snippets |wc -l ) -eq 0 ]; then
+cat >> ~/.config/coc/ultisnips/yaml.snippets << EOF_PAT6
+# PAT6
+
+snippet pod "kubernetes Pod"
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: ${1:PodName}
+    namespace: ${2:Namespace}
+    labels:
+      ${3:LabelName}: ${4:LabelValue}
+  spec:
+    containers:
+      - name: ${5:ContainerName}
+        image:${6:ImageName}
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+endsnippet
+snippet service "Kubernetes Service"
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: ${1:SvcName}
+    namespace: ${2:Namespace}
+  spec:
+    selector:
+      ${3:LabelName}: ${4:LabelValue}
+    ports:
+      - protocol: TCP
+        port: 80
+        targetPort: ${5:TargetPort}
+endsnippet
+snippet deploy "Kubernetes Deployment"
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: ${1:DeploymentName}
+    namespace: ${2:Namespace}
+    labels:
+      ${3:LabelName}: ${4:LabelValue}
+  spec:
+    replicas: ${5:Replicas}
+    selector:
+      matchLabels:
+        ${6:LabelName}: ${7:LabelValue}
+    template:
+      metadata:
+        labels:
+        ${6:LabelName}: ${9:LabelValue}
+      spec:
+        containers:
+        - name: ${10:ContainerName}
+          image:${11:ContainerImage}
+          ports:
+          - containerPort: 80
+endsnippet
+snippet cronjob "Kubernetes CronJob"
+  apiVersion: batch/v1beta1
+  kind: CronJob
+  metadata:
+    name: ${1:CronjobName}
+    namespace: ${2:Namespace}
+  spec:
+    schedule: "*/1 * * * *"
+    jobTemplate:
+      spec:
+        template:
+          spec:
+            containers:
+            - name: ${3:ContainerName}
+              image:${4:ImageName}
+            restartPolicy: OnFailure
+endsnippet
+snippet configmap "Kubernetes ConfigMap"
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: ${1:ConfigMapName}
+    namespace: ${2:Namespace}
+  data:
+    file.name: |
+      multiline contents
+      for this file.name
+endsnippet
+snippet secret "Kubernetes Secret"
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: ${1:SecretName}
+    namespace: ${2:Namespace}
+  type: Opaque
+  data:
+    base64.key1: ${3:Base64String1}
+    base64.key2: ${4:Base64String2}
+  stringData:
+    my.variable: ${5:MyVariableString}
+    my.file: |-
+      Multiline contents for this
+      secret file
+endsnippet
+snippet loadbalancer "Kubernetes LoadBalancer"
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: ${1:LoadBalancerName}
+    namespace: ${2:Namespace}
+  spec:
+    selector:
+      app: ${3:MyApp}
+    type: LoadBalancer
+    ports:
+      - protocol: TCP
+        port: 80
+        targetPort: ${3:TargetPort}
+    clusterIP: ${4:ClusterIP}
+endsnippet
+snippet ingress "Kubernetes Ingress"
+  apiVersion: networking.k8s.io/v1beta1
+  kind: Ingress
+  metadata:
+    name: ${1:IngressName}
+    namespace: ${2:Namespace}
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+  spec:
+    rules:
+    - host: foo.bar.com
+      http:
+        paths:
+        - path: /foo
+          backend:
+            serviceName: service1
+            servicePort: 4200
+        - path: /bar
+          backend:
+            serviceName: service2
+            servicePort: 8080
+endsnippet
+snippet job "Kubernetes Job"
+  apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: ${1:JobName}
+    namespace: ${2:Namespace}
+  spec:
+    template:
+      spec:
+        containers:
+        - name: ${3:ContainerName}
+          image: ${4:ImageName}
+        restartPolicy: Never
+    backoffLimit: 4
+endsnippet
+
+###################################
+# terraform
+###################################
+# variable
+snippet var "variable"
+variable "${1:name}" {
+  ${1}
+}
+endsnippet
+
+snippet var_em "variable with empty brackets"
+variable "${1:name}" {}
+endsnippet
+
+# providers
+snippet provider
+provider "${1:name}" {
+  ${2:config}
+}
+endsnippet
+
+snippet provider_aws
+provider "aws" {
+  access_key = "${var.access_key}"
+  secret_key = "${var.secret_key}"
+  region = "${var.region}"
+}
+endsnippet
+
+snippet provider_openstack
+provider "openstack" {
+  user_name  = "${var.user_name}"
+  tenant_name = "${var.tenant_name}"
+  password  = "${var.password}"
+  auth_url  = "${var.auth_url}"
+}
+endsnippet
+
+snippet provider_docker
+provider "docker" {
+  host = "${1:${var.host}}"
+}
+endsnippet
+
+snippet provider_google
+provider "google" {
+  account_file = "${file("account.json")}"
+  project = "my-gce-project"
+  region = "us-central1"
+}
+endsnippet
+
+snippet provider_digitalocean
+provider "digitalocean" {
+  token = "${var.do_token}"
+}
+endsnippet
+
+snippet provider_consul
+provider "consul" {
+  address = "demo.consul.io:80"
+k datacenter = "nyc1"
+}
+endsnippet
+
+# resource
+snippet resource
+resource "${1:type}" "${2:name}" {
+  ${3:config}
+}
+endsnippet
+
+## resource aws
+snippet resource_aws_instance
+resource "aws_instance" "${1:name}" {
+  ami = "${2:ami-383c1956}"
+  instance_type = "${3:t2.micro}"
+}
+endsnippet
+
+snippet resource_route53_record "Resource for a route53 record"
+resource "aws_route53_record" "$2" {
+  zone_id = "$3"
+  name = "$4"
+  type = "$5"
+  ttl = "${6:300}"
+  records = $7
+}
+endsnippet
+
+snippet resource_template_file "Template file resource"
+resource "template_file" "$1" {
+  filename = "$1"
+  vars {
+    $2
+  }
+}
+endsnippet
+
+snippet resource_aws_eip
+resource "aws_eip" "${1:name}" {
+  instance = "aws_instance.${2:$1}.id"
+  vpc = ${3:true}
+}
+endsnippet
+
+snippet resource_aws_key_pair
+resource "aws_key_pair" "${1:name}" {
+  key_name = "${2:$1}"
+  public_key = "${3:public_key}"
+}
+endsnippet
+
+snippet resource_aws_security_group
+resource "aws_security_group" "${1:name}" {
+  name = "${2:$1}"
+  description = "${3:desc}"
+
+  ingress {
+      from_port = ${4:from_port}
+      to_port = ${5:to_port}
+      protocol = "${5:tcp}"
+      cidr_blocks = ["${6:0.0.0.0/0}"]
+  }
+
+  egress {
+      from_port = ${7:0}
+      to_port = ${8:0}
+      protocol = "${9:-1}"
+      cidr_blocks = [${10:"0.0.0.0/0"}]
+  }
+}
+endsnippet
+
+snippet resource_aws_s3_bucket
+resource "aws_s3_bucket" "${1:name}" {
+  bucket = "${2:$1}"
+  acl = "${3:private}"
+}
+endsnippet
+
+snippet resource_aws_s3_bucket_static_web
+resource "aws_s3_bucket" "${1:name}" {
+  bucket = "${2:$1}"
+  acl = "${3:private}"
+  policy = "${4:${file("policy.json")}}"
+
+  website {
+      index_document = "${5:index.html}"
+      error_document = "${6:error.html}"
+  }
+}
+endsnippet
+
+## other
+
+snippet output
+output "${1:name}" {
+  value = "${2:${aws_instance.foo.public_ip}}"
+}
+endsnippet
+
+snippet tags
+tags {
+  Name = "${2:value}"
+}
+endsnippet
+
+
+## funcs
+snippet lookup "Lookup function" w
+\$\{lookup(var.$1, $2)\}
+endsnippet
+
+
+#types
+snippet qvar "quoted variable"
+"\$\{var.$1\}"
+endsnippet
+
+snippet res "resouce as a variable" w
+\$\{$1.$2\}
+endsnippet
+
+snippet var "regular var" w
+\$\{var.$1\}
+endsnippet
+
+snippet arr "make a array"
+[ $1 ]
+endsnippet
+
+snippet =
+$1 = $2
+endsnippet
+EOF_PAT6
+else
+echo "Nothing to do"
+fi
 if ! command -v sudo &> /dev/null; then
 apt update && apt install sudo -y
 fi
