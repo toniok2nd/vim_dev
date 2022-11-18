@@ -17,6 +17,11 @@ The script use local files:
 curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/yaml.snippets -O && cp yaml.snippets ~/.config/coc/ultisnips/yaml.snippets
 ```
 
+# To install minikub 
+```bash
+curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/minikubInstall |bash
+```
+
 # you can also generate a docker image from Dockerfile
 
 ## Doc for coc-nvim extensions
