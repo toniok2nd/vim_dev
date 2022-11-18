@@ -480,6 +480,3 @@ fi
 fi
 cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash
 npm install --global yarn
-mkdir -p ~/.vim/plugged/coc.nvim/
-cd ~/.vim/plugged/coc.nvim/ && yarn install
-vim +PlugInstall +qall
