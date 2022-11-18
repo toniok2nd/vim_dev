@@ -1,49 +1,92 @@
 #!/bin/bash
+
+####################################
+# GLOBAL(S) var
+####################################
+
+OUTPUT_FILE=template
+
+####################################
+# Functions
+####################################
 # S1 => pattern
 # $2 => fileName
 # $3 => localFilename
 addDataToFile(){
-  echo 'if [ $(grep '"EOF_$1 $2"' |wc -l ) -eq 0 ]; then' >> template
-  echo "cat >> $2 << EOF_$1" >> template
-  echo "<<<$1>>>" >> template
-  echo "EOF_$1" >> template
-  sed -i -e "/<<<$1>>>/r $3" -e "s/<<<$1>>>//g"  template
-  echo "else" >> template
-  echo 'echo "Nothing to do"' >> template
-  echo "fi" >> template
+  echo 'if [ $(grep '"$1 $2"' |wc -l ) -eq 0 ]; then' >> $OUTPUT_FILE
+  echo "cat >> $2 << EOF_$1" >> $OUTPUT_FILE
+  # case for vimrc
+  if [[ "$2" == *"vimrc"* ]]; then
+  echo "\" $1" >> $OUTPUT_FILE
+  else
+  echo "# $1" >> $OUTPUT_FILE
+  fi
+  echo "<<<$1>>>" >> $OUTPUT_FILE
+  echo "EOF_$1" >> $OUTPUT_FILE
+  sed -i -e "/<<<$1>>>/r $3" -e "s/<<<$1>>>//g"  $OUTPUT_FILE
+  echo "else" >> $OUTPUT_FILE
+  echo 'echo "Nothing to do"' >> $OUTPUT_FILE
+  echo "fi" >> $OUTPUT_FILE
 }
 addTestUserAsRoot(){
-  echo 'if (whoami != root)' >> template
-  echo 'then echo "Please run as root"' >> template
-  echo 'exit 1' >> template
-  echo 'fi' >> template
+  echo 'if (whoami != root)' >> $OUTPUT_FILE
+  echo 'then echo "Please run as root"' >> $OUTPUT_FILE
+  echo 'exit 1' >> $OUTPUT_FILE
+  echo 'fi' >> $OUTPUT_FILE
 }
 
-echo "#!/bin/bash" > template
-addTestUserAsRoot
-addDataToFile PAT1 "/root/.tmux.conf" tmuxFile
-addDataToFile PAT2 "/root/.vimrc" vimrcFile
-addDataToFile PAT3 "/root/.bashrc" bashrcFile
-addDataToFile PAT4 "/root/.vim/coc-settings.json" coc-settings.json
+initFile(){
+  echo "#!/bin/bash" > $OUTPUT_FILE
+}
 
-echo "apt update && apt install git curl make clang libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger -y" >> template
-echo "pip3 install jedi && pip3 install console_colors && git clone https://github.com/vim/vim.git" >> template
-echo "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" >> template
-echo "/bin/bash -c \"cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash\"" >> template
-echo "cd vim && ./configure --enable-python3interp && cd src && make && make install" >> template
-#COPY vimrcFile /root/.vimrc
-echo "/bin/bash -c 'echo \"q\" |vim  +PlugInstall +qall || true'" >> template
-echo "npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install" >> template
-echo "/bin/bash -c \"vim +'CocInstall -sync coc-css' +qall\""  >> template
-echo "/bin/bash -c \"vim +'CocInstall -sync coc-json' +qall\"" >> template
-echo "/bin/bash -c \"vim +'CocInstall -sync coc-yaml' +qall\"" >> template
-echo "/bin/bash -c \"vim +'CocInstall -sync coc-python' +qall\"" >> template
-echo "/bin/bash -c \"vim +'CocInstall -sync coc-git' +qall\"" >> template
-echo "/bin/bash -c \"vim +'CocInstall -sync coc-docker' +qall\"" >> template
-echo "/bin/bash -c \"vim +'CocInstall -sync coc-cmake' +qall\"" >> template
-echo "/bin/bash -c \"vim +'CocInstall -sync coc-xml' +qall\"" >> template
-echo "/bin/bash -c \"vim +'CocInstall -sync coc-go' +qall\"" >> template
-echo "/bin/bash -c \"vim +'CocInstall -sync coc-sh' +qall\"" >> template
-echo "/bin/bash -c \"vim +'CocInstall -sync coc-snippets' +qall\"" >> template
-echo "/bin/bash -c \"echo 'export GOPATH=$HOME/go' >> /root/.bash_profile\"" >> template
-echo "/bin/bash -c \"echo 'export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin' >> /root/.bash_profile\"" >> template
+addToFile(){
+  echo $1 >> $OUTPUT_FILE
+}
+
+####################################
+# build OUTPUT_FILE
+####################################
+
+# Init file
+initFile
+
+
+addTestUserAsRoot
+# add tmux conf
+addDataToFile PAT1 "~/.tmux.conf" tmuxFile
+# add vim conf
+addDataToFile PAT2 "~/.vimrc" vimrcFile
+# add bashrc conf
+addDataToFile PAT3 "~/.bashrc" bashrcFile
+# add coc-settings conf
+addDataToFile PAT4 "~/.vim/coc-settings.json" coc-settings.json
+# add profile conf
+addDataToFile PAT5 "~/.profile" profileFile
+
+# install apt tools
+addToFile "apt update && apt install git curl make clang libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger -y" 
+
+# install python
+addToFile "pip3 install jedi && pip3 install console_colors" 
+
+
+#----------
+# VIM
+#----------
+# test if vim is installed
+addToFile "if ! command -v vim &> /dev/null; then"
+addToFile "if ! [ $(vim --version | grep -q '+python';echo $?) -eq 0 ];then "
+# clone vim REPO
+addToFile "git clone https://github.com/vim/vim.git" 
+# configure and compile vim
+addToFile "cd vim && ./configure --enable-python3interp && cd src && make && make install" 
+addToFile "fi"
+addToFile "fi"
+
+# install nodejs
+addToFile "cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash" 
+
+# install plug for vim
+addToFile "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" 
+addToFile "vim  +PlugInstall +qall" 
+addToFile "npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install" 

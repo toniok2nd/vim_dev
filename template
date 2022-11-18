@@ -3,8 +3,9 @@ if (whoami != root)
 then echo "Please run as root"
 exit 1
 fi
-if [ $(grep EOF_PAT1 /root/.tmux.conf |wc -l ) -eq 0 ]; then
-cat >> /root/.tmux.conf << EOF_PAT1
+if [ $(grep PAT1 ~/.tmux.conf |wc -l ) -eq 0 ]; then
+cat >> ~/.tmux.conf << EOF_PAT1
+# PAT1
 
 # to write on user directory as .tmux.conf
 # remap prefix from 'C-b' to 'C-q'
@@ -108,8 +109,12 @@ EOF_PAT1
 else
 echo "Nothing to do"
 fi
-if [ $(grep EOF_PAT2 /root/.vimrc |wc -l ) -eq 0 ]; then
-cat >> /root/.vimrc << EOF_PAT2
+if [ $(grep PAT2 ~/.vimrc |wc -l ) -eq 0 ]; then
+cat >> ~/.vimrc << EOF_PAT2
+" PAT2
+
+" install coc extensions
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-go',  'coc-sh', 'coc-xml', 'coc-python', 'coc-cmake', 'coc-snippets', 'coc-yaml', 'coc-docker', 'coc-html']
 
 " May need for vim (not neovim) since coc.nvim calculate byte offset by count
 " utf-8 byte sequence.
@@ -194,131 +199,63 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Run the Code Lens action on the current line.
-nmap <leader>cl  <Plug>(coc-codelens-action)
-
-" Map function and class text objects
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
-
-" Remap <C-f> and <C-b> for scroll float windows/popups.
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-endif
-
-" Use CTRL-S for selections ranges.
-" Requires 'textDocument/selectionRange' support of language server.
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
-
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocActionAsync('format')
-
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
-
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-" Mappings for CoCList
-" Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
-" Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document.
-nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-
-" Don t try to be vi compatible " 
+" Don t try to be vi compatible  
 set nocompatible
  
-" Helps force plugins to load correctly when it is turned back on below "
+" Helps force plugins to load correctly when it is turned back on below 
 filetype on 
  
-" Turn on syntax highlighting "
+" Turn on syntax highlighting 
 syntax on
- 
 
-
-" set the runtime path to include Vundle and initialize "
+" set the runtime path to include Vundle and initialize 
 call plug#begin()
 
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
  
 call plug#end()            
  
-" Show line numbers "
+" Show line numbers 
 set number
  
-" Show file stats "
+" Show file stats 
 set ruler
  
-" Encoding "
+" Encoding 
 set encoding=utf-8
  
-" Whitespace "
+" Whitespace 
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
  
-" Allow hidden buffers "
+" Allow hidden buffers
 set hidden
  
-" Status bar "
+" Status bar
 set laststatus=2
  
-" specials chars "
+" specials chars
 set listchars+=space:.,tab:>-
 "set list
  
-" Last line "
+" Last line
 set showmode
 set showcmd
  
-" Searching "
+" Searching
 set hlsearch
 set incsearch
 set showmatch
 
-" TODO: Pick a leader key "
+" TODO: Pick a leader key
 let mapleader = ","
 
 let python_highlight_all = 1
@@ -354,8 +291,9 @@ EOF_PAT2
 else
 echo "Nothing to do"
 fi
-if [ $(grep EOF_PAT3 /root/.bashrc |wc -l ) -eq 0 ]; then
-cat >> /root/.bashrc << EOF_PAT3
+if [ $(grep PAT3 ~/.bashrc |wc -l ) -eq 0 ]; then
+cat >> ~/.bashrc << EOF_PAT3
+# PAT3
 
 set -o vi
 bind '"jj":"\e"'
@@ -413,8 +351,9 @@ EOF_PAT3
 else
 echo "Nothing to do"
 fi
-if [ $(grep EOF_PAT4 /root/.vim/coc-settings.json |wc -l ) -eq 0 ]; then
-cat >> /root/.vim/coc-settings.json << EOF_PAT4
+if [ $(grep PAT4 ~/.vim/coc-settings.json |wc -l ) -eq 0 ]; then
+cat >> ~/.vim/coc-settings.json << EOF_PAT4
+# PAT4
 
 {
   "languageserver": {
@@ -439,14 +378,25 @@ EOF_PAT4
 else
 echo "Nothing to do"
 fi
+if [ $(grep PAT5 ~/.profile |wc -l ) -eq 0 ]; then
+cat >> ~/.profile << EOF_PAT5
+# PAT5
+
+export GOPATH=$HOME/go
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+EOF_PAT5
+else
+echo "Nothing to do"
+fi
 apt update && apt install git curl make clang libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger -y
-pip3 install jedi && pip3 install console_colors && git clone https://github.com/vim/vim.git
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-/bin/bash -c "cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash"
+pip3 install jedi && pip3 install console_colors
+if ! command -v vim &> /dev/null; then
+if ! [ 0 -eq 0 ];then
+git clone https://github.com/vim/vim.git
 cd vim && ./configure --enable-python3interp && cd src && make && make install
-/bin/bash -c 'echo "q" |vim  +PlugInstall +qall || true'
+fi
+fi
+cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+vim +PlugInstall +qall
 npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install
-vim -c 'CocInstall -sync coc-json coc-go coc-sh coc-git coc-xml coc-python coc-cmake coc-snippets coc-yaml coc-docker coc-html|q'
-source /root/.bashrc
-/bin/bash -c "echo 'export GOPATH=/home/toniok/go' >> /root/.bash_profile"
-/bin/bash -c "echo 'export PATH=/home/toniok/.local/bin:/home/toniok/bin:/home/toniok/.nvm/versions/node/v18.0.0/bin:/home/toniok/.local/bin:/home/toniok/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/toniok/tizen-studio/platforms/tizen-5.0/common/tidl:/usr/local/go/bin:/home/toniok/kafka-beginners-course-master/BIN/kafka_2.13-2.6.0/bin:/usr/local/go/bin:/bin' >> /root/.bash_profile"
