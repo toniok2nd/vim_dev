@@ -251,3 +251,4 @@ vnoremap // :s/^/\/\//g<CR>
 hi CocMenuSel term=standout ctermfg=0 ctermbg=3 guifg=Blue guibg=Yellow
 set backspace=indent,eol,start
 set undofile
+set mouse=r
