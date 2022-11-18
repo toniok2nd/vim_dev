@@ -64,7 +64,7 @@ addDataToFile PAT4 "~/.vim/coc-settings.json" coc-settings.json
 addDataToFile PAT5 "~/.profile" profileFile
 
 # install apt tools
-addToFile "apt update && apt install git curl make clang libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger -y" 
+addToFile "sudo apt update && sudo apt install git curl make clang libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger -y" 
 
 # install python
 addToFile "pip3 install jedi && pip3 install console_colors" 
@@ -89,4 +89,4 @@ addToFile "cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash"
 # install plug for vim
 addToFile "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" 
 addToFile "vim  +PlugInstall +qall" 
-addToFile "npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install" 
+addToFile "npm install --global yarn && cd ~/.vim/plugged/coc.nvim/ && yarn install" 

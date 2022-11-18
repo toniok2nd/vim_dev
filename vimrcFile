@@ -1,4 +1,4 @@
-" install coc extensions
+" PAT2
 let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-go',  'coc-sh', 'coc-xml', 'coc-python', 'coc-cmake', 'coc-snippets', 'coc-yaml', 'coc-docker', 'coc-html']
 
 " May need for vim (not neovim) since coc.nvim calculate byte offset by count
@@ -18,7 +18,7 @@ set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: There's always complete item selected by default, you may want to enable
-" no select by `"suggest.noselect": true` in your configuration file.
+" no select by  in your configuration file.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
@@ -44,8 +44,8 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+" Use  and  to navigate diagnostics
+" Use  to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
@@ -84,63 +84,131 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
+" Applying codeAction to the selected region.
+" Example:  for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add  command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add  command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add  command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
 " Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" NOTE: Please see  for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-" Don t try to be vi compatible  
+
+" Don t try to be vi compatible " 
 set nocompatible
  
-" Helps force plugins to load correctly when it is turned back on below 
+" Helps force plugins to load correctly when it is turned back on below "
 filetype on 
  
-" Turn on syntax highlighting 
+" Turn on syntax highlighting "
 syntax on
+ 
 
-" set the runtime path to include Vundle and initialize 
+
+" set the runtime path to include Vundle and initialize "
 call plug#begin()
 
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
  
 call plug#end()            
  
-" Show line numbers 
+" Show line numbers "
 set number
  
-" Show file stats 
+" Show file stats "
 set ruler
  
-" Encoding 
+" Encoding "
 set encoding=utf-8
  
-" Whitespace 
+" Whitespace "
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
  
-" Allow hidden buffers
+" Allow hidden buffers "
 set hidden
  
-" Status bar
+" Status bar "
 set laststatus=2
  
-" specials chars
+" specials chars "
 set listchars+=space:.,tab:>-
 "set list
  
-" Last line
+" Last line "
 set showmode
 set showcmd
  
-" Searching
+" Searching "
 set hlsearch
 set incsearch
 set showmatch
 
-" TODO: Pick a leader key
+" TODO: Pick a leader key "
 let mapleader = ","
 
 let python_highlight_all = 1
@@ -156,7 +224,7 @@ let python_highlight_all = 1
 :nnoremap <space> $ 
 :inoremap jj <ESC>
 :cnoremap jj <ESC>
-:nnoremap <space>t :!ctags -aR --language-force=Python -L `python -c 'import sys,glob;tab=[];[ tab.extend(glob.glob(p+"/*py",recursive=True)) for p in sys.path ];[print(e) for e in tab]'` .   --extra=+ivmfc<cr><cr>
+:nnoremap <space>t :!ctags -aR --language-force=Python -L  .   --extra=+ivmfc<cr><cr>
 set belloff=all
 :cabbrev help tab help
 set tags=./tags;,tags;
@@ -164,9 +232,9 @@ set tags=./tags;,tags;
 
 au FileType go nmap <leader>r <Plug>(go-run-split)
 inoremap <leader><leader> <C-x><C-o>
-nnoremap \\ :s/\/\///g<CR>
+nnoremap \ :s/\/\///g<CR>
 nnoremap // 0a//<ESC>
-vnoremap \\ :s/^\/\///g<CR>
+vnoremap \ :s/^\/\///g<CR>
 vnoremap // :s/^/\/\//g<CR>
 
 hi CocMenuSel term=standout ctermfg=0 ctermbg=3 guifg=Blue guibg=Yellow
