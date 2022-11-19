@@ -17,7 +17,7 @@ The script use local files:
 curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/yaml.snippets -O && cp yaml.snippets ~/.config/coc/ultisnips/yaml.snippets
 ```
 
-# To install minikub 
+# To install minikub kubctl docker and kompose
 ```bash
 curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/minikubInstall |bash
 ```
