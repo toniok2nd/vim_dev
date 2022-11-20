@@ -29,3 +29,10 @@ chmod +x kompose
 sudo mv ./kompose /usr/local/bin/kompose
 echo 'source <(kompose completion bash)' >> ~/.bashrc 
 fi
+
+# install helm charts
+if ! command -v helm &> /dev/null; then
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+fi
