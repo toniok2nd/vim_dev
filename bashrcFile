@@ -52,5 +52,5 @@ alias ll='ls -alth'
 alias VENV="if [ -d VENV ]; then echo -e ' => '$GREEN'VENV found'; else echo -e ' => '$BLUE'NEW VENV'; python3 -m venv VENV; fi && source VENV/bin/activate"
 alias ranger="TERM=xterm-256color ranger"
 alias SSL_LOGKEY='echo -n "" > ~/.ssl-key.log;export SSLKEYLOGFILE=~/.ssl-key.log; firefox & wireshark &'
-vman(){ view <(man $1) -c "set filetype=man  nonumber"; }
+vman(){ view <(man "$1") -c "set filetype=man  nonumber" -c "colorscheme darkblue"; }
 
