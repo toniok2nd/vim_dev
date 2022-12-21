@@ -67,8 +67,7 @@ addDataToFile PAT5 "~/.profile" profileFile
 addToFile "if ! command -v sudo &> /dev/null; then"
 addToFile "apt update && apt install sudo -y" 
 addToFile "fi"
-addToFile "sudo apt update && sudo apt install git curl make clang libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger -y" 
-
+addToFile "sudo apt update && sudo apt install git curl make clang libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger apache2-utils -y" 
 # install python
 addToFile "pip3 install jedi && pip3 install console_colors" 
 
