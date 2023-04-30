@@ -16,7 +16,7 @@ Plug 'yaegassy/coc-ansible', {'do': 'yarn install --frozen-lockfile'}
  
 call plug#end()            
 
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-go',  'coc-sh', 'coc-xml', 'coc-python', 'coc-cmake', 'coc-snippets', 'coc-yaml', 'coc-docker', 'coc-html', 'coc-clangd','coc-perl' ]
+let g:coc_global_extensions = ['coc-json', 'coc-marketplace', 'coc-git', 'coc-go',  'coc-sh', 'coc-xml', 'coc-jedi', 'coc-cmake', 'coc-snippets', 'coc-yaml', 'coc-docker', 'coc-html', 'coc-clangd','coc-perl' ]
 
 " May need for vim (not neovim) since coc.nvim calculate byte offset by count
 " utf-8 byte sequence.
@@ -248,6 +248,7 @@ nnoremap // 0a//<ESC>
 vnoremap \ :s/^\/\///g<CR>
 vnoremap // :s/^/\/\//g<CR>
 
+highlight CocListLine ctermfg=Red guifg=#ff0000
 hi CocMenuSel term=standout ctermfg=0 ctermbg=3 guifg=Blue guibg=Yellow
 set backspace=indent,eol,start
 set undofile
