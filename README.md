@@ -3,6 +3,11 @@
 curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/template |bash
 ```
 
+# Build your docker image
+```bash
+curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/Dockerfile > MyDockerfile && docker build -t vim_docker -f MyDockerfile .
+```
+
 # To rebuild template
 ```bash
 bash buildScript.sh
