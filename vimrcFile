@@ -13,6 +13,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Or build from source code by using yarn: https://yarnpkg.com
 " Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 Plug 'yaegassy/coc-ansible', {'do': 'yarn install --frozen-lockfile'}
+
+
+Plug 'honza/vim-snippets'
  
 call plug#end()            
 
@@ -171,6 +174,8 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+" show snippets.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList snippets<CR>
 
 
 " Don t try to be vi compatible 
