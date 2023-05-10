@@ -445,6 +445,8 @@ if [ $(grep PAT4 ~/.vim/coc-settings.json |wc -l ) -eq 0 ]; then
 cat >> ~/.vim/coc-settings.json << EOF_PAT4
 # PAT4
 
+# PAT4
+
 {
   "languageserver": {
     "terraform": {
@@ -462,7 +464,8 @@ cat >> ~/.vim/coc-settings.json << EOF_PAT4
     "kubernetes": "/*.yaml"},
     "go.goplsOptions": {
       "completeUnimported": true
-    }
+    },
+    "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/16.0.2/clangd_16.0.2/bin/clangd"
 }
 EOF_PAT4
 else
