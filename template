@@ -484,7 +484,8 @@ fi
 if ! command -v sudo &> /dev/null; then
 apt update && apt install sudo -y
 fi
-sudo apt update && sudo apt install git curl make clang libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger apache2-utils -y
+sudo apt update && sudo apt install git curl make clang npm libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger apache2-utils -y
+npm install --global yarn
 pip3 install jedi && pip3 install console_colors
 if ! command -v vim &> /dev/null; then
 if ! [ $(vim --version | grep -q "+python";echo $?) -eq 0 ];then
@@ -492,5 +493,3 @@ git clone https://github.com/vim/vim.git
 cd vim && ./configure --enable-python3interp && cd src && make && make install
 fi
 fi
-cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash
-npm install --global yarn
