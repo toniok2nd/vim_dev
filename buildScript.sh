@@ -95,4 +95,5 @@ addToFile "echo \"deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.n
 addToFile "sudo apt-get update && sudo apt-get install nodejs -y"
 
 #addToFile "cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash" 
-#addToFile "npm install --global yarn" 
+addToFile "/bin/bash -c 'echo \"q\" |vim +PlugInstall +qall || true'"
+addToFile "npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install"
