@@ -67,7 +67,7 @@ addDataToFile PAT5 "~/.profile" profileFile
 addToFile "if ! command -v sudo &> /dev/null; then"
 addToFile "apt update && apt install sudo -y" 
 addToFile "fi"
-addToFile "sudo apt update && sudo apt install git curl make clang npm libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger apache2-utils -y" 
+addToFile "sudo apt update && sudo apt install git curl make clang libtool-bin python3-dev python3-pip exuberant-ctags python3-venv golang-go ranger apache2-utils -y" 
 addToFile "npm install --global yarn"
 # install python
 addToFile "pip3 install jedi && pip3 install console_colors" 
@@ -86,6 +86,13 @@ addToFile "cd vim && ./configure --enable-python3interp && cd src && make && mak
 addToFile "fi"
 addToFile "fi"
 
+
 # install nodejs
+addToFile "sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg"
+addToFile "curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg"
+addToFile "NODE_MAJOR=20"
+addToFile "echo \"deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main\" | sudo tee /etc/apt/sources.list.d/nodesource.list"
+addToFile "sudo apt-get update && sudo apt-get install nodejs -y"
+
 #addToFile "cat <(echo 'FORCE'='yes') <(curl -sL install-node.now.sh/lts) |bash" 
 #addToFile "npm install --global yarn" 
