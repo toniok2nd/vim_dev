@@ -86,11 +86,12 @@ addToFile "cd vim && ./configure --enable-python3interp && cd src && make && mak
 addToFile "fi"
 addToFile "fi"
 
-
-# install nodejs
+#----------
+# nodejs
+#----------
 addToFile "sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg"
 addToFile "curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg"
-NODE_MAJOR=20
+NODE_MAJOR=21
 addToFile "echo \"deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main\" | sudo tee /etc/apt/sources.list.d/nodesource.list"
 addToFile "sudo apt-get update && sudo apt-get install nodejs -y"
 

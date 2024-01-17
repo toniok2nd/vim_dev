@@ -51,60 +51,6 @@ bind '"' split-window -c "#{pane_current_path}"
 
 set -g status-style bg=red,fg=white
 set -g window-status-current-style bg=green
-
-## imported start ##
-# to write on user directory as .tmux.conf
-# remap prefix from 'C-b' to 'C-q'
-unbind C-b
-set-option -g prefix C-q
-bind-key C-q send-prefix
- 
-bind-key Y run-shell -b "tmux show-buffer |xclip -sel prim -i;tmux show-buffer |xclip -sel clip -i"
- 
-# set mode-keys vi
-set -g mode-keys vi
- 
-# https://github.com/dminca/dotfiles/tree/master/dotfiles
-# vim style
-###########
-# vim-like pane switching
-bind -r k select-pane -U
-bind -r j select-pane -D
-bind -r h select-pane -L
-bind -r l select-pane -R
- 
-# vim-like pane resizing
-bind -r C-k resize-pane -U
-bind -r C-j resize-pane -D
-bind -r C-h resize-pane -L
-bind -r C-l resize-pane -R
- 
-# unbind
-unbind Up
-unbind Down
-unbind Left
-unbind Right
- 
-unbind C-Up
-unbind C-Down
-unbind C-Left
-unbind C-Right
-
-unbind %
-unbind '"'
-bind % split-window -h -c "#{pane_current_path}"
-bind '"' split-window -c "#{pane_current_path}"
-
-set -g status-style bg=red,fg=white
-set -g window-status-current-style bg=green
-## imported stop ##
-
-
-
-set -g status-interval 60
-WEATHER='#(curl -s wttr.in/\?format\=4)'
-set -g status-right "$WEATHER ..."
-
 EOF_PAT1
 else
 echo "Nothing to do"
@@ -494,7 +440,7 @@ fi
 fi
 sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg
 curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_21.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
 sudo apt-get update && sudo apt-get install nodejs -y
 /bin/bash -c 'echo "q" |vim +PlugInstall +qall || true'
 npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install
