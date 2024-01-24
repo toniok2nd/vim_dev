@@ -1,0 +1,17 @@
+{
+  "languageserver": {
+    "python": {
+      "command": "python-language-server",
+      "args": ["-vv", "--log-file", "/tmp/pyls.log"],
+      "filetypes": ["python"],
+      "settings": {
+        "python": {
+          "analysis": {
+            "errors": {}
+          }
+        }
+      }
+    }
+  }
+}
+

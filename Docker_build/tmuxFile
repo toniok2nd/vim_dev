@@ -1,0 +1,42 @@
+# to write on user directory as .tmux.conf
+# remap prefix from 'C-b' to 'C-q'
+unbind C-b
+set-option -g prefix C-q
+bind-key C-q send-prefix
+ 
+# set mode-keys vi
+set -g mode-keys vi
+ 
+# https://github.com/dminca/dotfiles/tree/master/dotfiles
+# vim style
+###########
+# vim-like pane switching
+bind -r k select-pane -U
+bind -r j select-pane -D
+bind -r h select-pane -L
+bind -r l select-pane -R
+ 
+# vim-like pane resizing
+bind -r C-k resize-pane -U
+bind -r C-j resize-pane -D
+bind -r C-h resize-pane -L
+bind -r C-l resize-pane -R
+ 
+# unbind
+unbind Up
+unbind Down
+unbind Left
+unbind Right
+ 
+unbind C-Up
+unbind C-Down
+unbind C-Left
+unbind C-Right
+
+unbind %
+unbind '"'
+bind % split-window -h -c "#{pane_current_path}"
+bind '"' split-window -c "#{pane_current_path}"
+
+set -g status-style bg=red,fg=white
+set -g window-status-current-style bg=green

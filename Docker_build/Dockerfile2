@@ -1,0 +1,32 @@
+# Use the official Alpine Linux image
+FROM alpine:latest
+
+# Set the working directory
+WORKDIR /app
+
+# Install dependencies
+RUN apk add --no-cache \
+    vim \
+    nodejs \
+    npm \
+    bash \
+    curl \
+    python3 \
+    git
+
+# Install vim-plug (a Vim plugin manager)
+RUN curl -fLo /root/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# Copy your vim configuration file (if you have one) to the container
+COPY vimrcFile /root/.vimrc
+
+# Install coc.nvim plugins (you can customize this based on your needs)
+RUN vim -es -u /root/.vimrc -i NONE -c "PlugInstall" -c "qa"
+
+# Expose any ports if necessary
+# EXPOSE 8080
+
+# Set the default command when the container starts
+CMD ["vim"]
+
