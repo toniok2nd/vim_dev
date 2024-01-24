@@ -1,7 +1,7 @@
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
     silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-      autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 " set the runtime path to include Vundle and initialize 
@@ -12,14 +12,13 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "
 " Or build from source code by using yarn: https://yarnpkg.com
 " Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
-Plug 'yaegassy/coc-ansible', {'do': 'yarn install --frozen-lockfile'}
 
 " to add snippets
 Plug 'honza/vim-snippets'
  
 call plug#end()            
 
-let g:coc_global_extensions = ['coc-json', 'coc-css', 'coc-cssmodules', 'coc-marketplace', 'coc-git', 'coc-go',  'coc-sh', 'coc-xml', 'coc-jedi', 'coc-cmake', 'coc-snippets', 'coc-yaml', 'coc-docker', 'coc-html', 'coc-clangd','coc-perl' ]
+" let g:coc_global_extensions = ['coc-json', 'coc-css', 'coc-cssmodules', 'coc-marketplace', 'coc-git', 'coc-sh', 'coc-jedi', 'coc-snippets', 'coc-yaml', 'coc-html']
 
 " May need for vim (not neovim) since coc.nvim calculate byte offset by count
 " utf-8 byte sequence.
