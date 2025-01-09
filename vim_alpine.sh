@@ -32,5 +32,5 @@ if is_alpine; then
   # install vim plugin
   /bin/bash -c 'echo \"q\" |vim +PlugInstall +qall || true'
   npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install
-  vim -c 'CocInstall -sync coc-json coc-jedi coc-marketplace coc-sh coc-explorer coc-css coc-snippets coc-yaml coc-html coc-git |q'
+  # vim -c 'CocInstall -sync coc-json coc-jedi coc-marketplace coc-sh coc-explorer coc-css coc-snippets coc-yaml coc-html coc-git |q'
 fi
