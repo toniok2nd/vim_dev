@@ -3,6 +3,11 @@
 curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/template |bash
 ```
 
+# To install on alpine
+```bash
+curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/vim_alpine.sh |sh
+```
+
 # Build your docker image
 ```bash
 curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/Dockerfile > MyDockerfile && docker build -t vim_docker -f MyDockerfile .
