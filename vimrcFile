@@ -16,6 +16,10 @@ Plug 'yaegassy/coc-ansible', {'do': 'yarn install --frozen-lockfile'}
 
 " to add snippets
 Plug 'honza/vim-snippets'
+
+" install fzf
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
  
 call plug#end()            
 
