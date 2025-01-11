@@ -31,7 +31,8 @@ if is_alpine; then
   curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/bashFile -o ~/.bashrc
 
   # install vim plugin
-  /bin/bash -c 'echo \"q\" |vim +PlugInstall +qall || true'
+  #/bin/bash -c 'echo \"q\" |vim +PlugInstall +qall || true'
+  vim -c "CocInstall -sync $plugins | quitall"
   npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install
   vim -c 'redir > /here | let g:coc_global_extensions | redir END | quitall'
   plugins=$(cat /here | sed -n 's/.*\[\(.*\)\].*/\1/p' |sed 's/,//g' |sed "s/\'//g")
