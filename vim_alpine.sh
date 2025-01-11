@@ -37,7 +37,7 @@ if is_ubuntu; then
   curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/bashFile -o ~/.bashrc
 
   # Install vim plugin
-  /bin/bash -c 'echo "q" | vim +PlugInstall +qall || true'
+  /bin/bash -c 'echo \"q\" | vim +PlugInstall +qall || true'
 
   # Install yarn globally using npm and configure Coc.nvim
   npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install
@@ -62,9 +62,9 @@ if is_alpine; then
   python3 -m venv /VENV
   source /VENV/bin/activate
 
-        # Download and install pip using get-pip.py
-        curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-        python3 get-pip.py
+  # Download and install pip using get-pip.py
+  curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+  python3 get-pip.py
   
   # add configuration
   curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/vimrcFile -o ~/.vimrc
@@ -73,7 +73,11 @@ if is_alpine; then
 
   # install vim plugin
   /bin/bash -c 'echo \"q\" |vim +PlugInstall +qall || true'
+
+  # Install yarn globally using npm and configure Coc.nvim
   npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install
+  
+  # Get and install all global coc extensions
   vim -c 'redir > /here | let g:coc_global_extensions | redir END | quitall'
   plugins=$(cat /here | sed -n 's/.*\[\(.*\)\].*/\1/p' |sed 's/,//g' |sed "s/\'//g")
   vim -c "CocInstall -sync $plugins | quitall"
