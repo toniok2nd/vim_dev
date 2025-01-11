@@ -21,7 +21,11 @@ if is_ubuntu; then
 
   # Update package list and install necessary packages
   apt update
-  apt install -y python3-dev python3-pip build-essential libncurses-dev curl jq git fzf tmux bash golang-go nodejs vim npm xclip
+  apt install -y python3-dev python3-pip python3-venv build-essential libncurses-dev curl jq git fzf tmux bash golang-go nodejs vim npm xclip
+
+  # set venv
+  python3 -m venv /VENV
+  source /VENV/bin/activate
 
   # Add configuration files
   curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/vimrcFile -o ~/.vimrc
