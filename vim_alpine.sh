@@ -12,10 +12,10 @@ is_alpine() {
 if is_alpine; then
 
   # install package
-        apk update
+  apk update
   apk add --no-cache python3-dev
   apk add --no-cache build-base ncurses-dev 
-        apk add --no-cache curl jq yq git fzf tmux bash tmux go nodejs vim npm
+  apk add --no-cache curl jq yq git fzf tmux bash tmux go nodejs vim npm xclip
 
   # set venv
   python3 -m venv /VENV
