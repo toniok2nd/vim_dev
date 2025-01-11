@@ -21,15 +21,7 @@ if is_ubuntu; then
 
   # Update package list and install necessary packages
   apt update
-  apt install -y python3-dev build-essential libncurses-dev curl jq git fzf tmux bash golang-go nodejs vim npm xclip
-
-  # Set up Python virtual environment
-  python3 -m venv /VENV
-  source /VENV/bin/activate
-
-  # Download and install pip using get-pip.py
-  curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-  python3 get-pip.py
+  apt install -y python3-dev python3-pip build-essential libncurses-dev curl jq git fzf tmux bash golang-go nodejs vim npm xclip
 
   # Add configuration files
   curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/vimrcFile -o ~/.vimrc
