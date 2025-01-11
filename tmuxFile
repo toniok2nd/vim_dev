@@ -37,8 +37,11 @@ unbind C-Right
 
 unbind %
 unbind '"'
-bind % split-window -h -c "#{pane_current_path}"
-bind '"' split-window -c "#{pane_current_path}"
+bind-key % split-window -h -c "#{pane_current_path}"
+bind-key '"' split-window -c "#{pane_current_path}"
 
 set -g status-style bg=red,fg=white
 set -g window-status-current-style bg=green
+
+bind-key f send-keys '| fzf' 'Enter'
+bind-key m copy-mode                            
