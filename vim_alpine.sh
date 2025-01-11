@@ -21,7 +21,7 @@ if is_ubuntu; then
 
   # Update package list and install necessary packages
   apt update
-  apt install -y python3-dev build-essential libncurses-dev curl jq yq git fzf tmux bash golang-go nodejs vim npm xclip
+  apt install -y python3-dev build-essential libncurses-dev curl jq git fzf tmux bash golang-go nodejs vim npm xclip
 
   # Set up Python virtual environment
   python3 -m venv /VENV
@@ -37,8 +37,7 @@ if is_ubuntu; then
   curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/bashFile -o ~/.bashrc
 
   # Install vim plugin
-  # /bin/bash -c 'echo "q" | vim +PlugInstall +qall || true'
-  /bin/bash -c 'echo "q" | vim -c "CocInstall -sync $plugins | quitall" || true'
+  /bin/bash -c 'echo "q" | vim +PlugInstall +qall || true'
 
   # Install yarn globally using npm and configure Coc.nvim
   npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install
@@ -50,8 +49,6 @@ if is_ubuntu; then
   rm /here
 
 fi
-
-
 
 if is_alpine; then
 
@@ -75,12 +72,11 @@ if is_alpine; then
   curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/bashFile -o ~/.bashrc
 
   # install vim plugin
-  #/bin/bash -c 'echo \"q\" |vim +PlugInstall +qall || true'
-  /bin/bash -c 'echo \"q\" |vim -c "CocInstall -sync $plugins | quitall" || true'
+  /bin/bash -c 'echo \"q\" |vim +PlugInstall +qall || true'
   npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install
   vim -c 'redir > /here | let g:coc_global_extensions | redir END | quitall'
   plugins=$(cat /here | sed -n 's/.*\[\(.*\)\].*/\1/p' |sed 's/,//g' |sed "s/\'//g")
   vim -c "CocInstall -sync $plugins | quitall"
   rm /here
-  # vim -c 'CocInstall -sync coc-json coc-jedi coc-marketplace coc-sh coc-explorer coc-css coc-snippets coc-yaml coc-html coc-git |q'
+
 fi
