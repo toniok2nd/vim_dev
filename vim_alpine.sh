@@ -36,7 +36,7 @@ if is_ubuntu; then
 
   # Get and install all global coc extensions
   vim -c 'redir > /here | let g:coc_global_extensions | redir END | quitall'
-  plugins=$(cat /here | sed -n 's/.*\[\(.*\)\].*/\1/p' | sed 's/,//g' | sed "s/\'//g")
+  plugins=$(cat /here | sed -n 's/.*\[\(.*\)\].*/\1/p' | sed 's/,//g' | sed "s/'//g")
   vim -c "CocInstall -sync $plugins | quitall"
   rm /here
 
@@ -71,7 +71,7 @@ if is_alpine; then
   
   # Get and install all global coc extensions
   vim -c 'redir > /here | let g:coc_global_extensions | redir END | quitall'
-  plugins=$(cat /here | sed -n 's/.*\[\(.*\)\].*/\1/p' |sed 's/,//g' |sed "s/\'//g")
+  plugins=$(cat /here | sed -n 's/.*\[\(.*\)\].*/\1/p' |sed 's/,//g' |sed "s/'//g")
   vim -c "CocInstall -sync $plugins | quitall"
   rm /here
 
