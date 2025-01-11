@@ -26,7 +26,6 @@ if is_ubuntu; then
   # Add configuration files
   curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/vimrcFile -o ~/.vimrc
   curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/tmuxFile -o ~/.tmux.conf
-  curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/bashFile -o ~/.bashrc
 
   # Install vim plugin
   /bin/bash -c 'echo \"q\" | vim +PlugInstall +qall || true'
@@ -61,7 +60,6 @@ if is_alpine; then
   # add configuration
   curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/vimrcFile -o ~/.vimrc
   curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/tmuxFile -o ~/.tmux.conf
-  curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/bashFile -o ~/.bashrc
 
   # install vim plugin
   /bin/bash -c 'echo \"q\" |vim +PlugInstall +qall || true'
