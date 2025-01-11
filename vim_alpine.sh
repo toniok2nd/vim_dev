@@ -32,7 +32,7 @@ if is_alpine; then
 
   # install vim plugin
   #/bin/bash -c 'echo \"q\" |vim +PlugInstall +qall || true'
-  vim -c "CocInstall -sync $plugins | quitall"
+  /bin/bash -c 'vim -c "CocInstall -sync $plugins | quitall"'
   npm install --global yarn && cd /root/.vim/plugged/coc.nvim/ && yarn install
   vim -c 'redir > /here | let g:coc_global_extensions | redir END | quitall'
   plugins=$(cat /here | sed -n 's/.*\[\(.*\)\].*/\1/p' |sed 's/,//g' |sed "s/\'//g")
