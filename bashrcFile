@@ -53,4 +53,4 @@ alias VENV="if [ -d VENV ]; then echo -e ' => '$GREEN'VENV found'; else echo -e 
 alias ranger="TERM=xterm-256color ranger"
 alias SSL_LOGKEY='echo -n "" > ~/.ssl-key.log;export SSLKEYLOGFILE=~/.ssl-key.log; firefox & wireshark &'
 vman(){ view <(man "$1") -c "set filetype=man  nonumber" -c "colorscheme darkblue"; }
-vf(){ vim +$(nl $1 |fzf --tac |awk '{print $1}') $1; }
+vf(){ vim +$(nl $1 |fzf |awk '{print $1}') $1; }
