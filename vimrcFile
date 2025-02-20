@@ -266,4 +266,6 @@ set mouse=r
 command! ExecuteToCurrent execute ':!python -i <(head -n' . line('.') . ' ' . bufname('%') . ')'
 nnoremap <Space><Space> :ExecuteToCurrent<CR>
 
+command! DebugToCurrent execute ':!python -m pdb -c "break ' . line('.') . '" '  . bufname('%')
+nnoremap <Space>b :DebugToCurrent<CR>
 
