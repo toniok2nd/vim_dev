@@ -17,8 +17,6 @@ else
     exit 1
 fi
 
-
-
 # Create the fzf multi-line preview script
 echo "Creating ~/.fzf-multi-line-preview.sh..."
 cat << 'EOF' > ~/.fzf-multi-line-preview.sh
@@ -27,12 +25,14 @@ file="$1"
 line="$2"
 if [[ -f "$file" ]]; then
     if command -v batcat >/dev/null 2>&1; then
-        alias bat="batcat"
+        batcat --style=numbers -r "$line:" --color=always --highlight-line "$line" --paging=never  -- "$file"
+    else
+        bat --style=numbers -r "$line:" --color=always --highlight-line "$line" --paging=never -- "$file"
     fi
-    bat --style=numbers -r "$line:" --color=always --highlight-line "$line" --paging=never -- "$file"
 else
     echo "File not found"
 fi
+
 EOF
 chmod +x ~/.fzf-multi-line-preview.sh
 
