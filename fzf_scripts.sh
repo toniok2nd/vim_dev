@@ -30,7 +30,7 @@ cat << 'EOF' > ~/.fzf-multi-line-preview.sh
 file="$1"
 line="$2"
 if [[ -f "$file" ]]; then
-    bat --style=numbers --color=always --highlight-line "$line" --paging=never -- "$file"
+    bat --style=numbers -r "$line:" --color=always --highlight-line "$line" --paging=never -- "$file"
 else
     echo "File not found"
 fi
