@@ -11,7 +11,7 @@ elif command -v pacman >/dev/null 2>&1; then
 elif command -v brew >/dev/null 2>&1; then
     brew install fzf ripgrep bat
 elif command -v apk >/dev/null 2>&1; then
-    sudo apk add --no-cache fzf ripgrep bat
+    apk update && apk add --no-cache bash fzf ripgrep bat
 else
     echo "Unsupported package manager. Please install fzf, ripgrep, and bat manually."
     exit 1
@@ -30,7 +30,7 @@ cat << 'EOF' > ~/.fzf-multi-line-preview.sh
 file="$1"
 line="$2"
 if [[ -f "$file" ]]; then
-    batcat --style=numbers --color=always --highlight-line "$line" --paging=never -- "$file"
+    bat --style=numbers --color=always --highlight-line "$line" --paging=never -- "$file"
 else
     echo "File not found"
 fi
