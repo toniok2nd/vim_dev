@@ -30,7 +30,7 @@ cat << 'EOF' > ~/.fzf-multi-line-preview.sh
 file="$1"
 line="$2"
 if [[ -f "$file" ]]; then
-    bat --style=numbers --color=always --highlight-line "$line" --paging=never -- "$file"
+    batcat --style=numbers --color=always --highlight-line "$line" --paging=never -- "$file"
 else
     echo "File not found"
 fi
@@ -46,7 +46,7 @@ export FZF_DEFAULT_OPTS="--layout=reverse --info=inline --height=50% --border"
 
 # Function to search lines in multiple files with fzf
 fzf_multi_line_search() {
-    rg --line-number --no-heading --color=always "$@" |
+    rg --line-number --no-heading "$@" |
     fzf --preview="~/.fzf-multi-line-preview.sh {1} {2}" --preview-window=left,50% --delimiter=':' --with-nth=1,2
 }
 EOF
