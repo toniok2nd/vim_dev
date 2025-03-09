@@ -13,6 +13,11 @@ curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/vim_alpine.sh |s
 curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/Dockerfile > MyDockerfile && docker build -t vim_docker -f MyDockerfile .
 ```
 
+# Install fzf scripts
+```bash
+curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/fzf_scripts.sh |bash
+```
+
 # To rebuild template
 ```bash
 bash buildScript.sh
