@@ -17,11 +17,7 @@ else
     exit 1
 fi
 
-# Ensure bat is available as batcat (for Debian-based systems)
-if command -v batcat >/dev/null 2>&1; then
-    alias bat="batcat"
-    echo 'alias bat="batcat"' >> ~/.bashrc
-fi
+
 
 # Create the fzf multi-line preview script
 echo "Creating ~/.fzf-multi-line-preview.sh..."
@@ -30,6 +26,9 @@ cat << 'EOF' > ~/.fzf-multi-line-preview.sh
 file="$1"
 line="$2"
 if [[ -f "$file" ]]; then
+    if command -v batcat >/dev/null 2>&1; then
+        alias bat="batcat"
+    fi
     bat --style=numbers -r "$line:" --color=always --highlight-line "$line" --paging=never -- "$file"
 else
     echo "File not found"
