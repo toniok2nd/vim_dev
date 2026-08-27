@@ -20,7 +20,7 @@ curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/fzf_scripts.sh |
 
 # Add fzf methods to bashrc
 ```bash
-curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/addfzf |bash
+curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/addfzf.sh |bash
 ```
 
 # To rebuild template
