@@ -70,13 +70,14 @@ myfcd() {
     fi
 }
 
+
 myfzf() {
     ls "$@" | fzf -m | fzf --sync -x -m \
         --preview-window=right:70%:border \
-        --bind "ctrl-space:preview([ -x \"\$(command -v bat)\" ] && bat --style=numbers --color=always {} || cat {})" \
+        --bind "ctrl-space:preview([ -x \"\$(command -v bat)\" ] && bat --style=numbers --color=always {} || [ -x \"\$(command -v batcat)\" ] && batcat --style=numbers --color=always {} || cat {})" \
         --bind "ctrl-g:preview(git log --oneline --decorate --graph --all 2>&1 || echo 'Not a git repo')" \
-        --bind "alt-i:preview(ls -al --color=always )" \
-        --bind "ctrl-s:preview(stat {})" \
+        --bind "alt-i:preview(ls -al --color=always {})" \
+        --bind "ctrl-s:preview([ -x \"\$(command -v ccze)\" ] && stat {} | ccze -A || stat {})" \
         --bind "enter:execute(vim -p {+})" \
         --header "tab: select | ctrl‑space: preview | ctrl‑g: git log | alt‑i: ls | ctrl‑s: stat | enter: edit"
 }
