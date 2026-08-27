@@ -50,7 +50,36 @@ alias gitL='git log --graph --oneline --decorate --all'
 alias ll='ls -alth'
 
 alias VENV="if [ -d VENV ]; then echo -e ' => '$GREEN'VENV found'; else echo -e ' => '$BLUE'NEW VENV'; python3 -m venv VENV; fi && source VENV/bin/activate"
+
 alias ranger="TERM=xterm-256color ranger"
 alias SSL_LOGKEY='echo -n "" > ~/.ssl-key.log;export SSLKEYLOGFILE=~/.ssl-key.log; firefox & wireshark &'
 vman(){ view <(man "$1") -c "set filetype=man  nonumber" -c "colorscheme darkblue"; }
 vf(){ vim +$(nl $1 |fzf |awk '{print $1}') $1; }
+
+
+myfcd() {
+    local start_dir
+    start_dir="${1:-$(pwd)}"
+    local selected
+    selected=$(find "$start_dir" -mindepth 1 -type d 2>/dev/null |
+        fzf -m \
+            --preview 'ls -al --color=always {}' \
+            --bind 'enter:execute(echo "cd $(printf %q {})")+abort')
+    if [[ -n $selected ]]; then
+        eval -- "$selected"
+    fi
+}
+
+myfzf() {
+    ls "$@" | fzf -m | fzf --sync -x -m \
+        --preview-window=right:70%:border \
+        --bind "ctrl-space:preview([ -x \"\$(command -v bat)\" ] && bat --style=numbers --color=always {} || cat {})" \
+        --bind "ctrl-g:preview(git log --oneline --decorate --graph --all 2>&1 || echo 'Not a git repo')" \
+        --bind "alt-i:preview(ls -al --color=always )" \
+        --bind "ctrl-s:preview(stat {} | ccze -A)" \
+        --bind "enter:execute(vim -p {+})" \
+        --header "tab: select | ctrl‑space: preview | ctrl‑g: git log | alt‑i: ls | ctrl‑s: stat | enter: edit"
+}
+
+export -f myfcd
+export -f myfzf
