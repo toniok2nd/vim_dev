@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BASHRC="$HOME/.bashrc"
+BASHRC="${HOME}/.bashrc"
 
-# ---- Your functions block ----
-read -r -d '' FUNCTIONS_BLOCK <<'EOF'
+# --- The code to ensure exists in ~/.bashrc ---
+FUNCTIONS_BLOCK=$(cat <<'EOF'
+
 myfcd() {
     local start_dir
     start_dir="${1:-$(pwd)}"
@@ -33,63 +34,95 @@ myfzf() {
 export -f myfcd
 export -f myfzf
 EOF
+)
 
 have_cmd() { command -v "$1" >/dev/null 2>&1; }
 
-# If functions exist in ~/.bashrc already, don't add again
-func_in_bashrc() {
-  local fname="$1"
-  # Match either "fname() {" or "function fname {" forms
-  grep -Eq "^[[:space:]]*((${fname})[[:space:]]*\(\)[[:space:]]*\{|function[[:space:]]+${fname}\b)" "$BASHRC" 2>/dev/null
+# Check whether a function name already exists in ~/.bashrc
+has_func_in_bashrc() {
+  local fn="$1"
+  # Matches: "fn() {" or "function fn {" (also tolerates leading spaces)
+  grep -Eq "^[[:space:]]*((${fn})[[:space:]]*\(\)[[:space:]]*\{|function[[:space:]]+${fn}\b)" "$BASHRC" 2>/dev/null
 }
 
-# Install packages on Ubuntu/Debian using apt-get
-install_if_missing_apt() {
-  local pkg="$1"
-  local cmd="$2"
+append_block_if_missing() {
+  local missing=0
+  if ! has_func_in_bashrc "myfcd"; then missing=1; fi
+  if ! has_func_in_bashrc "myfzf"; then missing=1; fi
 
-  if have_cmd "$cmd"; then
-    echo "[+] $cmd already installed"
+  if [[ "$missing" -eq 1 ]]; then
+    echo "[*] Functions not found in $BASHRC. Appending..."
+    touch "$BASHRC"
+    {
+      echo ""
+      echo "# --- Added by installer ---"
+      echo "$FUNCTIONS_BLOCK"
+      echo "# --- End Added by installer ---"
+    } >> "$BASHRC"
+  else
+    echo "[*] Functions already exist in $BASHRC. Skipping append."
+  fi
+}
+
+install_pkg() {
+  local pkg="$1"
+
+  # Debian/Ubuntu
+  if have_cmd apt-get; then
+    sudo apt-get update -y
+    sudo apt-get install -y "$pkg"
     return 0
   fi
 
-  if ! have_cmd apt-get; then
-    echo "[-] apt-get not found. Please install '$pkg' manually."
-    exit 1
+  # Fedora/RHEL/CentOS
+  if have_cmd dnf; then
+    sudo dnf install -y "$pkg"
+    return 0
+  fi
+  if have_cmd yum; then
+    sudo yum install -y "$pkg"
+    return 0
   fi
 
-  echo "[*] Installing missing package: $pkg"
-  sudo apt-get update -y
-  sudo apt-get install -y "$pkg"
+  # Arch/Manjaro
+  if have_cmd pacman; then
+    sudo pacman -Sy --noconfirm "$pkg"
+    return 0
+  fi
+
+  echo "[-] No supported package manager found to install '$pkg'. Please install it manually."
+  return 1
 }
 
-mkdir -p "$(dirname "$BASHRC")"
-touch "$BASHRC"
+install_deps() {
+  if ! have_cmd fzf; then
+    echo "[*] fzf not installed. Installing..."
+    # Package name is typically "fzf" on most distros
+    install_pkg "fzf"
+  else
+    echo "[*] fzf already installed."
+  fi
 
-# ---- Ensure fzf + ccze ----
-# Debian/Ubuntu package names:
-install_if_missing_apt "fzf" "fzf"
-install_if_missing_apt "ccze" "ccze"
+  if ! have_cmd ccze; then
+    echo "[*] ccze not installed. Installing..."
+    # Package name is typically "ccze" on most distros
+    install_pkg "ccze"
+  else
+    echo "[*] ccze already installed."
+  fi
+}
 
-# ---- Append functions if missing ----
-need_append=0
-if ! func_in_bashrc "myfcd"; then need_append=1; fi
-if ! func_in_bashrc "myfzf"; then need_append=1; fi
+main() {
+  # Ensure ~/.bashrc exists
+  touch "$BASHRC"
 
-if [[ "$need_append" -eq 1 ]]; then
-  echo "[*] Adding myfcd/myfzf to $BASHRC"
-  {
-    echo ""
-    echo "# --- Added by addfzf.sh ---"
-    echo "$FUNCTIONS_BLOCK"
-    echo "# --- End Added by addfzf.sh ---"
-  } >> "$BASHRC"
-else
-  echo "[+] myfcd/myfzf already exist in $BASHRC"
-fi
+  append_block_if_missing
+  install_deps
 
-echo "[*] Sourcing $BASHRC"
-# shellcheck disable=SC1090
-source "$BASHRC"
+  echo "[*] Sourcing $BASHRC ..."
+  # shellcheck disable=SC1090
+  source "$BASHRC"
+  echo "[+] Done. Try: myfcd  (or myfzf)"
+}
 
-echo "[+] Done. Try: myfcd / myfzf"
+main "$@"
