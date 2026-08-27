@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BASHRC="${HOME}/.bashrc"
+BASHRC="$HOME/.bashrc"
 
+# ---- Your functions block ----
 read -r -d '' FUNCTIONS_BLOCK <<'EOF'
 myfcd() {
     local start_dir
@@ -33,68 +34,62 @@ export -f myfcd
 export -f myfzf
 EOF
 
-# --- helpers ---
 have_cmd() { command -v "$1" >/dev/null 2>&1; }
 
-# Detect if function exists in ~/.bashrc (rough but practical)
-func_exists() {
+# If functions exist in ~/.bashrc already, don't add again
+func_in_bashrc() {
   local fname="$1"
-  grep -Eq "^[[:space:]]*${fname}[[:space:]]*\(" "$BASHRC" 2>/dev/null
+  # Match either "fname() {" or "function fname {" forms
+  grep -Eq "^[[:space:]]*((${fname})[[:space:]]*\(\)[[:space:]]*\{|function[[:space:]]+${fname}\b)" "$BASHRC" 2>/dev/null
 }
 
+# Install packages on Ubuntu/Debian using apt-get
 install_if_missing_apt() {
   local pkg="$1"
   local cmd="$2"
 
   if have_cmd "$cmd"; then
-    echo "[+] ${cmd} already installed"
+    echo "[+] $cmd already installed"
     return 0
   fi
 
-  echo "[*] ${cmd} not found. Installing ${pkg}..."
+  if ! have_cmd apt-get; then
+    echo "[-] apt-get not found. Please install '$pkg' manually."
+    exit 1
+  fi
+
+  echo "[*] Installing missing package: $pkg"
   sudo apt-get update -y
   sudo apt-get install -y "$pkg"
 }
 
-# --- ensure apt exists (Ubuntu/Debian case) ---
-if ! have_cmd apt-get; then
-  echo "[-] apt-get not found. This script currently installs using apt (Ubuntu/Debian)."
-  exit 1
-fi
+mkdir -p "$(dirname "$BASHRC")"
+touch "$BASHRC"
 
-# --- ensure dependencies ---
-# Package names on Ubuntu/Debian are usually:
-#   fzf  -> fzf
-#   ccze -> ccze
+# ---- Ensure fzf + ccze ----
+# Debian/Ubuntu package names:
 install_if_missing_apt "fzf" "fzf"
 install_if_missing_apt "ccze" "ccze"
 
-# --- ensure functions in ~/.bashrc ---
-touch "$BASHRC"
-
+# ---- Append functions if missing ----
 need_append=0
-if ! func_exists "myfcd"; then
-  need_append=1
-fi
-if ! func_exists "myfzf"; then
-  need_append=1
-fi
+if ! func_in_bashrc "myfcd"; then need_append=1; fi
+if ! func_in_bashrc "myfzf"; then need_append=1; fi
 
 if [[ "$need_append" -eq 1 ]]; then
-  echo "[*] Appending functions to $BASHRC ..."
+  echo "[*] Adding myfcd/myfzf to $BASHRC"
   {
     echo ""
-    echo "# --- Added by installer: myfcd/myfzf ---"
+    echo "# --- Added by addfzf.sh ---"
     echo "$FUNCTIONS_BLOCK"
-    echo "# --- End added by installer ---"
+    echo "# --- End Added by addfzf.sh ---"
   } >> "$BASHRC"
 else
-  echo "[+] Functions already exist in $BASHRC"
+  echo "[+] myfcd/myfzf already exist in $BASHRC"
 fi
 
-# --- source bashrc ---
-echo "[*] Sourcing $BASHRC ..."
+echo "[*] Sourcing $BASHRC"
 # shellcheck disable=SC1090
 source "$BASHRC"
 
-echo "[+] Done."
+echo "[+] Done. Try: myfcd / myfzf"
