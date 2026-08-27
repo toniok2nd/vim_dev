@@ -18,6 +18,11 @@ curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/Dockerfile > MyD
 curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/fzf_scripts.sh |bash
 ```
 
+# Add fzf methods to bashrc
+```bash
+curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/addfzf |sh
+```
+
 # To rebuild template
 ```bash
 bash buildScript.sh
