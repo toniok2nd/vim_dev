@@ -2,10 +2,16 @@
 ```bash
 curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/template |bash
 ```
+```bash
+curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/nvim_install.sh |sh
+```
 
 # To install on alpine
 ```bash
 curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/vim_alpine.sh |sh
+```
+```bash
+curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/nvim_install.sh |sh
 ```
 
 # Build your docker image
