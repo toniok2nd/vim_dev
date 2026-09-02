@@ -3,3 +3,4 @@ rich
 flask
 click
 ipdb
+dotenv
