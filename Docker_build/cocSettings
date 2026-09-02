@@ -1,0 +1,9 @@
+{
+  "jedi.executable.command": "/opt/jedi-venv/bin/jedi-language-server",
+  "snippets.ultisnips.pythonPrompt": false,
+  "explorer.keyMappings.global": {
+    "t": ["open:tab", "quit"],
+    "<cr>": "toggleSelection",
+    "<space>": false    
+  }
+}
