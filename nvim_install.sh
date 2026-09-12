@@ -52,8 +52,7 @@ if [ "$OS" = "ubuntu" ] || [ "$OS" = "debian" ]; then
             fi                                 
             eval $line                         
         done                                   
-    else                                       
-    else                                                                                       
+    else                                                                                                                       
         echo "⚠️   $rc_file is not writable. You must add NVM lines manually."                  
     fi                                         
 
