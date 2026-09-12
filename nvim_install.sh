@@ -2,7 +2,7 @@
 set -e
 
 echo "==========================================================="
-echo " Starting Thales Assistant System & Dev Environment Setup..."
+echo " Starting Assistant System & Dev Environment Setup..."
 echo "==========================================================="
 
 # Helper to use sudo only if it's available (Alpine often runs as root without sudo)
@@ -24,10 +24,43 @@ fi
 if [ "$OS" = "ubuntu" ] || [ "$OS" = "debian" ]; then
     echo "Detected Ubuntu/Debian."
     $SUDO_CMD apt-get update -y
-    $SUDO_CMD apt-get install -y tmux python3-pip python3-venv curl git bash neovim nodejs npm nano openssl tzdata fzf jq
-    
-    # Historically reliable method to install yarn on Ubuntu
-    $SUDO_CMD npm install --global yarn
+    $SUDO_CMD apt-get install -y tmux python3-pip python3-venv curl git bash neovim nano openssl tzdata fzf jq
+                                                                                                                                                              
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.7/install.sh | bash
+                                                                                               
+    # ────────────────────────────────────────────────────────────             
+    # Add NVM initialization only if it hasn't been added already              
+    # ────────────────────────────────────────────────────────────                             
+                                                                               
+    # λ: avoid duplicate entries                                               
+    _nvm_lines=(                                                               
+        'export NVM_DIR="$HOME/.nvm"'                                          
+        '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'                     
+        '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"'                   
+    )                                                                                          
+                                               
+    # Where to look                            
+    rc_file=~/.bashrc                          
+                                               
+    # Is the file writable? (possible if mounted read‑only in containers etc.)                 
+    if [[ -w $rc_file ]]; then                                                                 
+        for line in "${_nvm_lines[@]}"; do                                                     
+            # `grep -F -q` – fixed string, quiet, return true if found                         
+            if ! grep -Fxq "$line" "$rc_file"; then                                            
+                printf '\n%s\n' "$line" >> "$rc_file"                                          
+                echo "✅ Added missing NVM line to $rc_file: $line"                            
+            fi                                 
+            eval $line                         
+        done                                   
+    else                                       
+    else                                                                                       
+        echo "⚠️   $rc_file is not writable. You must add NVM lines manually."                  
+    fi                                         
+
+    NVM_VERSION="lts/jod"                      
+    nvm install $NVM_VERSION                   
+    nvm use $NVM_VERSION                       
+    nvm exec $NVM_VERSION npm install -g yarn            
 
 elif [ "$OS" = "alpine" ]; then
     echo "Detected Alpine Linux."
