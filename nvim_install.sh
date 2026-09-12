@@ -158,7 +158,6 @@ vim.cmd([[
 ]])
 
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme vim]])
 
 -- Menu color conf
 vim.opt.termguicolors = true
