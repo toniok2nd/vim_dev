@@ -49,5 +49,5 @@ RUN mkdir -p /root/.config/nvim && \
     echo '{"jedi.executable.command": "/opt/jedi-venv/bin/jedi-language-server"}' > /root/.config/nvim/coc-settings.json
 
 # 6. Venv install 
-python3 -m venv /opt/VENV
-/opt/VENV/bin/pip3 install -r requirements.txt
+RUN python3 -m venv /opt/VENV && \
+   /opt/VENV/bin/pip3 install -r requirements.txt
