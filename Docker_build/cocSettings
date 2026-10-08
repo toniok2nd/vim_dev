@@ -1,5 +1,5 @@
 {
-  "jedi.executable.command": "/opt/jedi-venv/bin/jedi-language-server",
+  "jedi.executable.command": "/root/.local/share/nvim/.jedi-venv/bin/jedi-language-server",
   "snippets.ultisnips.pythonPrompt": false,
   "explorer.keyMappings.global": {
     "t": ["open:tab", "quit"],
