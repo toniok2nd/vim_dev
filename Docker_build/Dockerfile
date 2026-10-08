@@ -44,10 +44,6 @@ RUN python3 -m venv /root/.local/share/nvim/.jedi-venv && \
     /root/.local/share/nvim/.jedi-venv/bin/pip3 install -U pip && \
     /root/.local/share/nvim/.jedi-venv/bin/pip3 install 'jedi-language-server>=0.41.1'
 
-# 5. Tell coc-jedi to use this specific installation so it doesn't try to download it again
-RUN mkdir -p /root/.config/nvim && \
-    echo '{"jedi.executable.command": "/opt/jedi-venv/bin/jedi-language-server"}' > /root/.config/nvim/coc-settings.json
-
-# 6. Venv install 
+# 5. Venv install 
 RUN python3 -m venv /opt/VENV && \
    /opt/VENV/bin/pip3 install -r /requirements.txt
