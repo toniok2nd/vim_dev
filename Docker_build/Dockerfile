@@ -50,4 +50,4 @@ RUN mkdir -p /root/.config/nvim && \
 
 # 6. Venv install 
 RUN python3 -m venv /opt/VENV && \
-   /opt/VENV/bin/pip3 install -r requirements.txt
+   /opt/VENV/bin/pip3 install -r /requirements.txt
