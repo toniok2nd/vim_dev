@@ -10,10 +10,14 @@ vim.cmd [[
   Plug 'ellisonleao/gruvbox.nvim' 
   call plug#end()
 ]]
--- Automatically install these extensions if they are missing
-vim.g.coc_global_extensions = { 'coc-json', 'coc-pyright', 'coc-css', 'coc-cssmodules', 'coc-marketplace', 'coc-git', 'coc-sh', 'coc-jedi', 'coc-snippets', 'coc-yaml', 'coc-html', 'coc-explorer'}
 
--- FIX 1: Safely check if coc.nvim is installed before calling its functions
+-- ==========================================================================
+-- 2. NVIM custom
+-- ==========================================================================
+-- Automatically install these extensions if they are missing
+-- vim.g.coc_global_extensions = { 'coc-json', 'coc-css', 'coc-cssmodules', 'coc-marketplace', 'coc-git', 'coc-sh', 'coc-jedi', 'coc-snippets', 'coc-yaml', 'coc-html', 'coc-explorer'}
+
+-- Safely check if coc.nvim is installed before calling its functions
 vim.cmd([[
   if exists('*coc#config')
     call coc#config('snippets.ultisnips.enable', v:false)
@@ -31,7 +35,7 @@ vim.api.nvim_set_hl(0, "CocMenuSel", { bg = "lightgreen", fg = "black", bold = t
 vim.api.nvim_set_hl(0, "CocListLine", { bg = "lightgreen", fg = "black", bold = true })
 
 -- ==========================================================================
--- 2. GENERAL SETTINGS
+-- 3. GENERAL SETTINGS
 -- ==========================================================================
 vim.opt.backup = false
 vim.opt.writebackup = false
@@ -58,7 +62,7 @@ vim.opt.belloff = "all"
 vim.keymap.set({'i', 'c'}, 'jj', '<ESC>', { noremap = true })
 
 -- ==========================================================================
--- 3. COC.NVIM KEYMAPPINGS & CONFIGURATION
+-- 4. COC.NVIM KEYMAPPINGS & CONFIGURATION
 -- ==========================================================================
 -- Show coc.nvim status 
 vim.opt.statusline:prepend('%{coc#status()}')
@@ -85,7 +89,7 @@ keyset('n', 'gr', '<Plug>(coc-references)', { silent = true })
 keyset('n', '<leader>rn', '<Plug>(coc-rename)', { silent = true })
 
 -- ==========================================================================
--- 4. COCLIST MAPPINGS
+-- 5. COCLIST MAPPINGS
 -- ==========================================================================
 local list_opts = {silent = true, nowait = true}
 keyset("n", "<space>a", ":<C-u>CocList diagnostics<cr>", list_opts)
