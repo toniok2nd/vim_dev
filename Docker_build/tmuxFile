@@ -6,6 +6,13 @@ bind-key C-space send-prefix
  
 # set mode-keys vi
 set -g mode-keys vi
+
+# set mouse
+set -g mouse on
+
+# copy past options
+bind-key -T copy-mode-vi C-c send-keys -X copy-pipe-and-cancel "wl-copy"
+bind-key -n C-v run "wl-paste -n | tmux load-buffer - ; tmux paste-buffer"
  
 # https://github.com/dminca/dotfiles/tree/master/dotfiles
 # vim style
