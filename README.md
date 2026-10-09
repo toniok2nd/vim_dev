@@ -2,8 +2,13 @@
 ```bash
 curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/template |bash
 ```
+## nvim
 ```bash
 curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/nvim_install.sh |sh
+```
+or
+```bash
+curl https://raw.githubusercontent.com/toniok2nd/vim_dev/master/nvim_installV2.sh |sh
 ```
 
 # To install on alpine
