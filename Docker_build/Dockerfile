@@ -16,6 +16,7 @@ RUN apk --no-cache add \
                     openssl \
                     tzdata \
                     fzf \
+                    wayland \
                     jq && \
                     # Neovim standard paths
                     mkdir -p ~/.local/share/nvim/site/autoload ~/.config/nvim
