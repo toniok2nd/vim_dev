@@ -52,4 +52,4 @@ RUN python3 -m venv /opt/VENV && \
 
 # 6. Bashrc var
 COPY bashrc /tmp/.bashrc
-RUN cat /tmp/.bashrc >> /root/.bashrc && cp /tmp/.bashrc /root/.profile && rm /tmp/.bashrc
+RUN cp /tmp/.bashrc /root/.bashrc && cp /tmp/.bashrc /root/.profile && rm /tmp/.bashrc
