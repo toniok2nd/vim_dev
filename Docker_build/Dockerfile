@@ -52,6 +52,4 @@ RUN python3 -m venv /opt/VENV && \
 
 # 6. Bashrc var
 COPY bashrc /tmp/.bashrc
-
-# 2. Append it, then remove the temporary file
 RUN cat /tmp/.bashrc >> /root/.bashrc && cp /tmp/.bashrc /root/.profile && rm /tmp/.bashrc
