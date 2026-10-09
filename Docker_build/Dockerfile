@@ -10,6 +10,7 @@ RUN apk --no-cache add \
                     git \
                     bash \
                     neovim \
+                    neovim-doc \
                     nodejs \
                     npm \
                     nano \
@@ -49,4 +50,8 @@ RUN python3 -m venv /root/.local/share/nvim/.jedi-venv && \
 RUN python3 -m venv /opt/VENV && \
    /opt/VENV/bin/pip3 install -r /requirements.txt
 
-# 6. Alias
+# 6. Bashrc var
+COPY bashrc /tmp/.bashrc
+
+# 2. Append it, then remove the temporary file
+RUN cat /tmp/.bashrc >> /root/.bashrc && cp /tmp/.bashrc /root/.profile && rm /tmp/.bashrc

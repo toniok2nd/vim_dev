@@ -38,6 +38,7 @@ vim.api.nvim_set_hl(0, "CocListLine", { bg = "lightgreen", fg = "black", bold = 
 -- 3. GENERAL SETTINGS
 -- ==========================================================================
 vim.g.clipboard = "tmux"
+vim.opt.mouse = ""
 vim.opt.clipboard = "unnamedplus"
 vim.opt.backup = false
 vim.opt.writebackup = false

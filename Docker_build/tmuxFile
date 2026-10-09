@@ -8,7 +8,7 @@ bind-key C-space send-prefix
 set -g mode-keys vi
 
 # set mouse
-set -g mouse on
+#set -g mouse on
 
 # copy past options
 bind-key -T copy-mode-vi C-c send-keys -X copy-pipe-and-cancel "wl-copy"
